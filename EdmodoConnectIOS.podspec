@@ -6,28 +6,24 @@
 #
 Pod::Spec.new do |s|
   s.name             = "EdmodoConnectIOS"
-  s.version          = File.read('VERSION')
-  s.summary          = "A short description of EdmodoConnectIOS."
+  s.version          = "0.1"
+  s.summary          = "EdmodoConnectIOS is an SDK."
   s.description      = <<-DESC
-                       An optional longer description of EdmodoConnectIOS
-
-                       * Markdown format.
-                       * Don't worry about the indent, we strip it!
+                       EdmodoConnectIOS is an SDK that is longer than the summary
                        DESC
-  s.homepage         = "http://EXAMPLE/NAME"
-  s.screenshots      = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
+  s.homepage         = "http://edmodo.com"
+  s.screenshots      = "https://assets.edmodo.com/images_v2/landing/landing.png"
   s.license          = 'MIT'
   s.author           = { "Doug Banks" => "doug@edmodo.com" }
-  s.source           = { :git => "http://EXAMPLE/NAME.git", :tag => s.version.to_s }
-  s.social_media_url = 'https://twitter.com/EXAMPLE'
+  s.source           = { :git => "https://github.com/dougbanks/EdmodoConnectIOS.git", :tag => "cpodsv#{s.version}" }
 
-  # s.platform     = :ios, '5.0'
-  # s.ios.deployment_target = '5.0'
+  s.platform     = :ios, '6.1'
+  # s.ios.deployment_target = '6.1'
   # s.osx.deployment_target = '10.7'
   s.requires_arc = true
 
-  s.source_files = 'Classes'
-  s.resources = 'Assets/*.png'
+  s.source_files = 'Classes/ios'
+  # s.resources = 'Assets/*.png'
 
   s.ios.exclude_files = 'Classes/osx'
   s.osx.exclude_files = 'Classes/ios'
