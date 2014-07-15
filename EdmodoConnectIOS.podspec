@@ -6,7 +6,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = "EdmodoConnectIOS"
-  s.version          = "0.1.1"
+  s.version          = "0.1.2"
   s.summary          = "EdmodoConnectIOS is an SDK."
   s.description      = <<-DESC
                        EdmodoConnectIOS is an SDK that is longer than the summary
@@ -22,7 +22,7 @@ Pod::Spec.new do |s|
   # s.osx.deployment_target = '10.7'
   s.requires_arc = true
 
-  s.source_files = 'Classes/ios'
+  s.source_files = 'EdmodoConnectIOS'
   # s.resources = 'Assets/*.png'
 
   s.ios.exclude_files = 'Classes/osx'
