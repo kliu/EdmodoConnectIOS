@@ -40,7 +40,7 @@
  
  Return YES if we success in restoring.
  */
-- (BOOL) restoreLogin:(NSArray*)scopes;
+- (BOOL) restoreLogin;
 
 /**
  Step 3.
