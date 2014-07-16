@@ -168,7 +168,6 @@
  */
 -(void) __onDataStoreConfigSuccess: (id<EMDataStore>) dataStore
 {
-    [[EMObjects sharedInstance] setDataStore:dataStore];
     [_loginView removeFromSuperview];
     [[EMObjects sharedInstance] setDataStore:dataStore];
     _loginSuccessHandler();

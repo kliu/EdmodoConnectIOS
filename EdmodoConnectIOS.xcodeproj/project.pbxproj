@@ -1,0 +1,573 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		91242A82194FC6280008B97D /* Framework */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 91242A83194FC6280008B97D /* Build configuration list for PBXAggregateTarget "Framework" */;
+			buildPhases = (
+				91242A88194FC69B0008B97D /* ShellScript */,
+			);
+			dependencies = (
+				91242A87194FC6860008B97D /* PBXTargetDependency */,
+			);
+			name = Framework;
+			productName = Framework;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		917CE964194FA984004B8054 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 917CE963194FA984004B8054 /* Foundation.framework */; };
+		917CE972194FA984004B8054 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 917CE971194FA984004B8054 /* XCTest.framework */; };
+		917CE973194FA984004B8054 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 917CE963194FA984004B8054 /* Foundation.framework */; };
+		917CE978194FA984004B8054 /* libEdmodoConnectIOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 917CE960194FA984004B8054 /* libEdmodoConnectIOS.a */; };
+		917CE97E194FA984004B8054 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 917CE97C194FA984004B8054 /* InfoPlist.strings */; };
+		917CE9B1194FAAB5004B8054 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 917CE9B0194FAAB5004B8054 /* UIKit.framework */; };
+		91B902CE1975FA0400A2A6D7 /* EdmodoConnectIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 91B902B91975FA0400A2A6D7 /* EdmodoConnectIOS.h */; };
+		91B902CF1975FA0400A2A6D7 /* EMBlockTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 91B902BA1975FA0400A2A6D7 /* EMBlockTypes.h */; };
+		91B902D01975FA0400A2A6D7 /* EMConnectDataStore.h in Headers */ = {isa = PBXBuildFile; fileRef = 91B902BB1975FA0400A2A6D7 /* EMConnectDataStore.h */; };
+		91B902D11975FA0400A2A6D7 /* EMConnectDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B902BC1975FA0400A2A6D7 /* EMConnectDataStore.m */; };
+		91B902D21975FA0400A2A6D7 /* EMConnectLoginView.h in Headers */ = {isa = PBXBuildFile; fileRef = 91B902BD1975FA0400A2A6D7 /* EMConnectLoginView.h */; };
+		91B902D31975FA0400A2A6D7 /* EMConnectLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B902BE1975FA0400A2A6D7 /* EMConnectLoginView.m */; };
+		91B902D41975FA0400A2A6D7 /* EMDataStore.h in Headers */ = {isa = PBXBuildFile; fileRef = 91B902BF1975FA0400A2A6D7 /* EMDataStore.h */; };
+		91B902D51975FA0400A2A6D7 /* EMErrorHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 91B902C01975FA0400A2A6D7 /* EMErrorHelper.h */; };
+		91B902D61975FA0400A2A6D7 /* EMErrorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B902C11975FA0400A2A6D7 /* EMErrorHelper.m */; };
+		91B902D71975FA0400A2A6D7 /* EMGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = 91B902C21975FA0400A2A6D7 /* EMGroup.h */; };
+		91B902D81975FA0400A2A6D7 /* EMGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B902C31975FA0400A2A6D7 /* EMGroup.m */; };
+		91B902D91975FA0400A2A6D7 /* EMLoginService.h in Headers */ = {isa = PBXBuildFile; fileRef = 91B902C41975FA0400A2A6D7 /* EMLoginService.h */; };
+		91B902DA1975FA0400A2A6D7 /* EMLoginService.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B902C51975FA0400A2A6D7 /* EMLoginService.m */; };
+		91B902DB1975FA0400A2A6D7 /* EMMockDataStore.h in Headers */ = {isa = PBXBuildFile; fileRef = 91B902C61975FA0400A2A6D7 /* EMMockDataStore.h */; };
+		91B902DC1975FA0400A2A6D7 /* EMMockDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B902C71975FA0400A2A6D7 /* EMMockDataStore.m */; };
+		91B902DD1975FA0400A2A6D7 /* EMMockLoginView.h in Headers */ = {isa = PBXBuildFile; fileRef = 91B902C81975FA0400A2A6D7 /* EMMockLoginView.h */; };
+		91B902DE1975FA0400A2A6D7 /* EMMockLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B902C91975FA0400A2A6D7 /* EMMockLoginView.m */; };
+		91B902DF1975FA0400A2A6D7 /* EMObjects.h in Headers */ = {isa = PBXBuildFile; fileRef = 91B902CA1975FA0400A2A6D7 /* EMObjects.h */; };
+		91B902E01975FA0400A2A6D7 /* EMObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B902CB1975FA0400A2A6D7 /* EMObjects.m */; };
+		91B902E11975FA0400A2A6D7 /* EMUser.h in Headers */ = {isa = PBXBuildFile; fileRef = 91B902CC1975FA0400A2A6D7 /* EMUser.h */; };
+		91B902E21975FA0400A2A6D7 /* EMUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B902CD1975FA0400A2A6D7 /* EMUser.m */; };
+		91B902E41975FA3500A2A6D7 /* EdmodoConnectIOS-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 91B902E31975FA3500A2A6D7 /* EdmodoConnectIOS-Prefix.pch */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		91242A86194FC6860008B97D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 917CE958194FA984004B8054 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 917CE95F194FA984004B8054;
+			remoteInfo = EdmodoConnectIOS;
+		};
+		917CE976194FA984004B8054 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 917CE958194FA984004B8054 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 917CE95F194FA984004B8054;
+			remoteInfo = EdmodoConnectIOS;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		917CE960194FA984004B8054 /* libEdmodoConnectIOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libEdmodoConnectIOS.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		917CE963194FA984004B8054 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		917CE970194FA984004B8054 /* EdmodoConnectIOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EdmodoConnectIOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		917CE971194FA984004B8054 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		917CE97B194FA984004B8054 /* EdmodoConnectIOSTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "EdmodoConnectIOSTests-Info.plist"; sourceTree = "<group>"; };
+		917CE97D194FA984004B8054 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		917CE9B0194FAAB5004B8054 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		91B902B91975FA0400A2A6D7 /* EdmodoConnectIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EdmodoConnectIOS.h; path = Classes/ios/EdmodoConnectIOS.h; sourceTree = SOURCE_ROOT; };
+		91B902BA1975FA0400A2A6D7 /* EMBlockTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EMBlockTypes.h; path = Classes/ios/EMBlockTypes.h; sourceTree = SOURCE_ROOT; };
+		91B902BB1975FA0400A2A6D7 /* EMConnectDataStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EMConnectDataStore.h; path = Classes/ios/EMConnectDataStore.h; sourceTree = SOURCE_ROOT; };
+		91B902BC1975FA0400A2A6D7 /* EMConnectDataStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EMConnectDataStore.m; path = Classes/ios/EMConnectDataStore.m; sourceTree = SOURCE_ROOT; };
+		91B902BD1975FA0400A2A6D7 /* EMConnectLoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EMConnectLoginView.h; path = Classes/ios/EMConnectLoginView.h; sourceTree = SOURCE_ROOT; };
+		91B902BE1975FA0400A2A6D7 /* EMConnectLoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EMConnectLoginView.m; path = Classes/ios/EMConnectLoginView.m; sourceTree = SOURCE_ROOT; };
+		91B902BF1975FA0400A2A6D7 /* EMDataStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EMDataStore.h; path = Classes/ios/EMDataStore.h; sourceTree = SOURCE_ROOT; };
+		91B902C01975FA0400A2A6D7 /* EMErrorHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EMErrorHelper.h; path = Classes/ios/EMErrorHelper.h; sourceTree = SOURCE_ROOT; };
+		91B902C11975FA0400A2A6D7 /* EMErrorHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EMErrorHelper.m; path = Classes/ios/EMErrorHelper.m; sourceTree = SOURCE_ROOT; };
+		91B902C21975FA0400A2A6D7 /* EMGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EMGroup.h; path = Classes/ios/EMGroup.h; sourceTree = SOURCE_ROOT; };
+		91B902C31975FA0400A2A6D7 /* EMGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EMGroup.m; path = Classes/ios/EMGroup.m; sourceTree = SOURCE_ROOT; };
+		91B902C41975FA0400A2A6D7 /* EMLoginService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EMLoginService.h; path = Classes/ios/EMLoginService.h; sourceTree = SOURCE_ROOT; };
+		91B902C51975FA0400A2A6D7 /* EMLoginService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EMLoginService.m; path = Classes/ios/EMLoginService.m; sourceTree = SOURCE_ROOT; };
+		91B902C61975FA0400A2A6D7 /* EMMockDataStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EMMockDataStore.h; path = Classes/ios/EMMockDataStore.h; sourceTree = SOURCE_ROOT; };
+		91B902C71975FA0400A2A6D7 /* EMMockDataStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EMMockDataStore.m; path = Classes/ios/EMMockDataStore.m; sourceTree = SOURCE_ROOT; };
+		91B902C81975FA0400A2A6D7 /* EMMockLoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EMMockLoginView.h; path = Classes/ios/EMMockLoginView.h; sourceTree = SOURCE_ROOT; };
+		91B902C91975FA0400A2A6D7 /* EMMockLoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EMMockLoginView.m; path = Classes/ios/EMMockLoginView.m; sourceTree = SOURCE_ROOT; };
+		91B902CA1975FA0400A2A6D7 /* EMObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EMObjects.h; path = Classes/ios/EMObjects.h; sourceTree = SOURCE_ROOT; };
+		91B902CB1975FA0400A2A6D7 /* EMObjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EMObjects.m; path = Classes/ios/EMObjects.m; sourceTree = SOURCE_ROOT; };
+		91B902CC1975FA0400A2A6D7 /* EMUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EMUser.h; path = Classes/ios/EMUser.h; sourceTree = SOURCE_ROOT; };
+		91B902CD1975FA0400A2A6D7 /* EMUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EMUser.m; path = Classes/ios/EMUser.m; sourceTree = SOURCE_ROOT; };
+		91B902E31975FA3500A2A6D7 /* EdmodoConnectIOS-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "EdmodoConnectIOS-Prefix.pch"; path = "Classes/ios/EdmodoConnectIOS-Prefix.pch"; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		917CE95D194FA984004B8054 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				917CE9B1194FAAB5004B8054 /* UIKit.framework in Frameworks */,
+				917CE964194FA984004B8054 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		917CE96D194FA984004B8054 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				917CE978194FA984004B8054 /* libEdmodoConnectIOS.a in Frameworks */,
+				917CE972194FA984004B8054 /* XCTest.framework in Frameworks */,
+				917CE973194FA984004B8054 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		917CE957194FA984004B8054 = {
+			isa = PBXGroup;
+			children = (
+				917CE965194FA984004B8054 /* EdmodoConnectIOS */,
+				917CE979194FA984004B8054 /* EdmodoConnectIOSTests */,
+				917CE962194FA984004B8054 /* Frameworks */,
+				917CE961194FA984004B8054 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		917CE961194FA984004B8054 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				917CE960194FA984004B8054 /* libEdmodoConnectIOS.a */,
+				917CE970194FA984004B8054 /* EdmodoConnectIOSTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		917CE962194FA984004B8054 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				917CE9B0194FAAB5004B8054 /* UIKit.framework */,
+				917CE963194FA984004B8054 /* Foundation.framework */,
+				917CE971194FA984004B8054 /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		917CE965194FA984004B8054 /* EdmodoConnectIOS */ = {
+			isa = PBXGroup;
+			children = (
+				91B902B91975FA0400A2A6D7 /* EdmodoConnectIOS.h */,
+				91B902BA1975FA0400A2A6D7 /* EMBlockTypes.h */,
+				91B902BB1975FA0400A2A6D7 /* EMConnectDataStore.h */,
+				91B902BC1975FA0400A2A6D7 /* EMConnectDataStore.m */,
+				91B902BD1975FA0400A2A6D7 /* EMConnectLoginView.h */,
+				91B902BE1975FA0400A2A6D7 /* EMConnectLoginView.m */,
+				91B902BF1975FA0400A2A6D7 /* EMDataStore.h */,
+				91B902C01975FA0400A2A6D7 /* EMErrorHelper.h */,
+				91B902C11975FA0400A2A6D7 /* EMErrorHelper.m */,
+				91B902C21975FA0400A2A6D7 /* EMGroup.h */,
+				91B902C31975FA0400A2A6D7 /* EMGroup.m */,
+				91B902C41975FA0400A2A6D7 /* EMLoginService.h */,
+				91B902C51975FA0400A2A6D7 /* EMLoginService.m */,
+				91B902C61975FA0400A2A6D7 /* EMMockDataStore.h */,
+				91B902C71975FA0400A2A6D7 /* EMMockDataStore.m */,
+				91B902C81975FA0400A2A6D7 /* EMMockLoginView.h */,
+				91B902C91975FA0400A2A6D7 /* EMMockLoginView.m */,
+				91B902CA1975FA0400A2A6D7 /* EMObjects.h */,
+				91B902CB1975FA0400A2A6D7 /* EMObjects.m */,
+				91B902CC1975FA0400A2A6D7 /* EMUser.h */,
+				91B902CD1975FA0400A2A6D7 /* EMUser.m */,
+				917CE966194FA984004B8054 /* Supporting Files */,
+			);
+			path = EdmodoConnectIOS;
+			sourceTree = "<group>";
+		};
+		917CE966194FA984004B8054 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				91B902E31975FA3500A2A6D7 /* EdmodoConnectIOS-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		917CE979194FA984004B8054 /* EdmodoConnectIOSTests */ = {
+			isa = PBXGroup;
+			children = (
+				917CE97A194FA984004B8054 /* Supporting Files */,
+			);
+			path = EdmodoConnectIOSTests;
+			sourceTree = "<group>";
+		};
+		917CE97A194FA984004B8054 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				917CE97B194FA984004B8054 /* EdmodoConnectIOSTests-Info.plist */,
+				917CE97C194FA984004B8054 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		91242A7F194FC4490008B97D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				91B902CF1975FA0400A2A6D7 /* EMBlockTypes.h in Headers */,
+				91B902D41975FA0400A2A6D7 /* EMDataStore.h in Headers */,
+				91B902D91975FA0400A2A6D7 /* EMLoginService.h in Headers */,
+				91B902E11975FA0400A2A6D7 /* EMUser.h in Headers */,
+				91B902E41975FA3500A2A6D7 /* EdmodoConnectIOS-Prefix.pch in Headers */,
+				91B902DF1975FA0400A2A6D7 /* EMObjects.h in Headers */,
+				91B902D71975FA0400A2A6D7 /* EMGroup.h in Headers */,
+				91B902CE1975FA0400A2A6D7 /* EdmodoConnectIOS.h in Headers */,
+				91B902DD1975FA0400A2A6D7 /* EMMockLoginView.h in Headers */,
+				91B902DB1975FA0400A2A6D7 /* EMMockDataStore.h in Headers */,
+				91B902D21975FA0400A2A6D7 /* EMConnectLoginView.h in Headers */,
+				91B902D01975FA0400A2A6D7 /* EMConnectDataStore.h in Headers */,
+				91B902D51975FA0400A2A6D7 /* EMErrorHelper.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		917CE95F194FA984004B8054 /* EdmodoConnectIOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 917CE983194FA984004B8054 /* Build configuration list for PBXNativeTarget "EdmodoConnectIOS" */;
+			buildPhases = (
+				917CE95C194FA984004B8054 /* Sources */,
+				917CE95D194FA984004B8054 /* Frameworks */,
+				91242A7F194FC4490008B97D /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EdmodoConnectIOS;
+			productName = EdmodoConnectIOS;
+			productReference = 917CE960194FA984004B8054 /* libEdmodoConnectIOS.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		917CE96F194FA984004B8054 /* EdmodoConnectIOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 917CE986194FA984004B8054 /* Build configuration list for PBXNativeTarget "EdmodoConnectIOSTests" */;
+			buildPhases = (
+				917CE96C194FA984004B8054 /* Sources */,
+				917CE96D194FA984004B8054 /* Frameworks */,
+				917CE96E194FA984004B8054 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				917CE977194FA984004B8054 /* PBXTargetDependency */,
+			);
+			name = EdmodoConnectIOSTests;
+			productName = EdmodoConnectIOSTests;
+			productReference = 917CE970194FA984004B8054 /* EdmodoConnectIOSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		917CE958194FA984004B8054 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "Doug Banks";
+			};
+			buildConfigurationList = 917CE95B194FA984004B8054 /* Build configuration list for PBXProject "EdmodoConnectIOS" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 917CE957194FA984004B8054;
+			productRefGroup = 917CE961194FA984004B8054 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				917CE95F194FA984004B8054 /* EdmodoConnectIOS */,
+				917CE96F194FA984004B8054 /* EdmodoConnectIOSTests */,
+				91242A82194FC6280008B97D /* Framework */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		917CE96E194FA984004B8054 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				917CE97E194FA984004B8054 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		91242A88194FC69B0008B97D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\nset +u\n# Avoid recursively calling this script.\nif [[ $SF_MASTER_SCRIPT_RUNNING ]]\nthen\nexit 0\nfi\nset -u\nexport SF_MASTER_SCRIPT_RUNNING=1\n\nSF_TARGET_NAME=${PROJECT_NAME}\nSF_EXECUTABLE_PATH=\"lib${SF_TARGET_NAME}.a\"\nSF_WRAPPER_NAME=\"${SF_TARGET_NAME}.framework\"\n\n# The following conditionals come from\n# https://github.com/kstenerud/iOS-Universal-Framework\n\nif [[ \"$SDK_NAME\" =~ ([A-Za-z]+) ]]\nthen\nSF_SDK_PLATFORM=${BASH_REMATCH[1]}\nelse\necho \"Could not find platform name from SDK_NAME: $SDK_NAME\"\nexit 1\nfi\n\nif [[ \"$SDK_NAME\" =~ ([0-9]+.*$) ]]\nthen\nSF_SDK_VERSION=${BASH_REMATCH[1]}\nelse\necho \"Could not find sdk version from SDK_NAME: $SDK_NAME\"\nexit 1\nfi\n\nif [[ \"$SF_SDK_PLATFORM\" = \"iphoneos\" ]]\nthen\nSF_OTHER_PLATFORM=iphonesimulator\nelse\nSF_OTHER_PLATFORM=iphoneos\nfi\n\nif [[ \"$BUILT_PRODUCTS_DIR\" =~ (.*)$SF_SDK_PLATFORM$ ]]\nthen\nSF_OTHER_BUILT_PRODUCTS_DIR=\"${BASH_REMATCH[1]}${SF_OTHER_PLATFORM}\"\nelse\necho \"Could not find platform name from build products directory: $BUILT_PRODUCTS_DIR\"\nexit 1\nfi\n\n# Build the other platform.\nxcrun xcodebuild -project \"${PROJECT_FILE_PATH}\" -target \"${TARGET_NAME}\" -configuration \"${CONFIGURATION}\" -sdk ${SF_OTHER_PLATFORM}${SF_SDK_VERSION} BUILD_DIR=\"${BUILD_DIR}\" OBJROOT=\"${OBJROOT}\" BUILD_ROOT=\"${BUILD_ROOT}\" SYMROOT=\"${SYMROOT}\" $ACTION\n\n# Smash the two static libraries into one fat binary and store it in the .framework\nxcrun lipo -create \"${BUILT_PRODUCTS_DIR}/${SF_EXECUTABLE_PATH}\" \"${SF_OTHER_BUILT_PRODUCTS_DIR}/${SF_EXECUTABLE_PATH}\" -output \"${BUILT_PRODUCTS_DIR}/${SF_WRAPPER_NAME}/Versions/A/${SF_TARGET_NAME}\"\n\n# Copy the binary to the other architecture folder to have a complete framework in both.\ncp -a \"${BUILT_PRODUCTS_DIR}/${SF_WRAPPER_NAME}/Versions/A/${SF_TARGET_NAME}\" \"${SF_OTHER_BUILT_PRODUCTS_DIR}/${SF_WRAPPER_NAME}/Versions/A/${SF_TARGET_NAME}\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		917CE95C194FA984004B8054 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				91B902DA1975FA0400A2A6D7 /* EMLoginService.m in Sources */,
+				91B902DE1975FA0400A2A6D7 /* EMMockLoginView.m in Sources */,
+				91B902E01975FA0400A2A6D7 /* EMObjects.m in Sources */,
+				91B902D11975FA0400A2A6D7 /* EMConnectDataStore.m in Sources */,
+				91B902D31975FA0400A2A6D7 /* EMConnectLoginView.m in Sources */,
+				91B902D61975FA0400A2A6D7 /* EMErrorHelper.m in Sources */,
+				91B902D81975FA0400A2A6D7 /* EMGroup.m in Sources */,
+				91B902E21975FA0400A2A6D7 /* EMUser.m in Sources */,
+				91B902DC1975FA0400A2A6D7 /* EMMockDataStore.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		917CE96C194FA984004B8054 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		91242A87194FC6860008B97D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 917CE95F194FA984004B8054 /* EdmodoConnectIOS */;
+			targetProxy = 91242A86194FC6860008B97D /* PBXContainerItemProxy */;
+		};
+		917CE977194FA984004B8054 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 917CE95F194FA984004B8054 /* EdmodoConnectIOS */;
+			targetProxy = 917CE976194FA984004B8054 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		917CE97C194FA984004B8054 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				917CE97D194FA984004B8054 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		91242A84194FC6280008B97D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		91242A85194FC6280008B97D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		917CE981194FA984004B8054 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		917CE982194FA984004B8054 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		917CE984194FA984004B8054 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = NO;
+				DSTROOT = /tmp/EdmodoConnectIOS.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "Classes/ios/EdmodoConnectIOS-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "$(PROJECT_NAME)Headers";
+				SKIP_INSTALL = YES;
+				STRIP_INSTALLED_PRODUCT = NO;
+				STRIP_STYLE = "non-global";
+				SYMROOT = "$(PROJECT_DIR)/../build";
+			};
+			name = Debug;
+		};
+		917CE985194FA984004B8054 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = NO;
+				DSTROOT = /tmp/EdmodoConnectIOS.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "Classes/ios/EdmodoConnectIOS-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "$(PROJECT_NAME)Headers";
+				SKIP_INSTALL = YES;
+				STRIP_INSTALLED_PRODUCT = NO;
+				STRIP_STYLE = "non-global";
+				SYMROOT = "$(PROJECT_DIR)/../build";
+			};
+			name = Release;
+		};
+		917CE987194FA984004B8054 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "EdmodoConnectIOS/EdmodoConnectIOS-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "EdmodoConnectIOSTests/EdmodoConnectIOSTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		917CE988194FA984004B8054 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "EdmodoConnectIOS/EdmodoConnectIOS-Prefix.pch";
+				INFOPLIST_FILE = "EdmodoConnectIOSTests/EdmodoConnectIOSTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		91242A83194FC6280008B97D /* Build configuration list for PBXAggregateTarget "Framework" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				91242A84194FC6280008B97D /* Debug */,
+				91242A85194FC6280008B97D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		917CE95B194FA984004B8054 /* Build configuration list for PBXProject "EdmodoConnectIOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				917CE981194FA984004B8054 /* Debug */,
+				917CE982194FA984004B8054 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		917CE983194FA984004B8054 /* Build configuration list for PBXNativeTarget "EdmodoConnectIOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				917CE984194FA984004B8054 /* Debug */,
+				917CE985194FA984004B8054 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		917CE986194FA984004B8054 /* Build configuration list for PBXNativeTarget "EdmodoConnectIOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				917CE987194FA984004B8054 /* Debug */,
+				917CE988194FA984004B8054 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 917CE958194FA984004B8054 /* Project object */;
+}
