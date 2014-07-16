@@ -9,8 +9,6 @@
 #ifndef EdmodoConnectIOS_Header_h
 #define EdmodoConnectIOS_Header_h
 
-// What the hell?
-
 #import "EMBlockTypes.h"
 #import "EMConnectDataStore.h"
 #import "EMConnectLoginView.h"
