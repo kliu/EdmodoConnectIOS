@@ -45,6 +45,21 @@
     return _sharedObject;
 }
 
+- (id) init
+{
+    self = [super init];
+    if (self) {
+        _debugEnabled = NO;
+        _scopes = @[@"basic", @"read_groups"];
+    }
+    return self;
+}
+
+- (void) setScopes:(NSArray *)scopes
+{
+    _scopes = scopes;
+}
+
 -(void) logout
 {
     // Clear out edmodo objects.
@@ -65,7 +80,8 @@
     [[EMMockDataStore sharedInstance] populate];
     id<EMDataStore> dataStore = [self __getCachedDataStore];
     if (dataStore) {
-        [[EMObjects sharedInstance] setDataStore:dataStore];
+        [[EMObjects sharedInstance] setDataStore:dataStore
+                                      withScopes:_scopes];
         return YES;
     }
     return NO;
@@ -74,7 +90,6 @@
 -(void) initiateLoginInParentView:(UIView*)parentView
                      withClientID:(NSString*)clientID
                   withRedirectURI:(NSString*)redirectURI
-                       withScopes:(NSArray*)scopes
                         onSuccess:(EMVoidResultBlock_t)sHandler
                          onCancel:(EMVoidResultBlock_t)cHandler
                           onError:(EMNSErrorBlock_t)eHandler
@@ -82,21 +97,23 @@
     _parentView = parentView;
     _clientID = clientID;
     _redirectURI = redirectURI;
-    _scopes = scopes;
     
     _loginSuccessHandler = sHandler;
     _loginCancelHandler = cHandler;
     _loginErrorHandler = eHandler;
     
     [[EMMockDataStore sharedInstance] populate];
-    // FIXME(dbanks)
-    // We don't really want this log-term, we will always use real login.
-    UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Login"
-                                                        message:@"Login with real Edmodo or mock Edmodo?"
-                                                       delegate:self
-                                              cancelButtonTitle:@"Cancel"
-                                              otherButtonTitles:@"Real", @"Mock", nil];
-    [alertView show];
+
+    if (_debugEnabled) {
+        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Login"
+                                                            message:@"Login with real Edmodo or mock Edmodo?"
+                                                           delegate:self
+                                                  cancelButtonTitle:@"Cancel"
+                                                  otherButtonTitles:@"Real", @"Mock", nil];
+        [alertView show];
+    } else {
+        [self __offerRealLogin];
+    }
 }
 
 /**
@@ -169,7 +186,8 @@
 -(void) __onDataStoreConfigSuccess: (id<EMDataStore>) dataStore
 {
     [_loginView removeFromSuperview];
-    [[EMObjects sharedInstance] setDataStore:dataStore];
+    [[EMObjects sharedInstance] setDataStore:dataStore
+                                  withScopes:_scopes];
     _loginSuccessHandler();
     [self __cleanUpLogin];
 }
@@ -214,6 +232,9 @@
     }
     
     if ([loginType isEqualToString:LOGIN_TYPE_MOCK]) {
+        if (!_debugEnabled) {
+            return nil;
+        }
         NSInteger userID = [[defaults objectForKey:MOCK_TOKEN_KEY] integerValue];
         if (userID == 0) {
             return nil;

@@ -32,7 +32,13 @@ typedef void (^EMObjectsConfiguredBlock_t)();
 - (id)init;
 
 // When told to reset from data store, where are we pulling from?
-- (void) setDataStore:(id<EMDataStore>)dataStore;
+// Also, what scopes are supported by this data store (what questions should
+// I not even ask?
+// More on scopes:
+// https://developers.edmodo.com/edmodo-connect/docs
+- (void) setDataStore:(id<EMDataStore>)dataStore
+           withScopes:(NSArray*)scopes;
+
 // Pull data from Edmodo data store, if we have one.
 // If we don't, nothing is loaded and we call success.
 // If we do, we do RPCs or whatever to fetch data, success or failure

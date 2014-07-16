@@ -24,6 +24,45 @@
 
 + (id)sharedInstance;
 
+/** 
+ Step 1.
+ Set the scopes you will use to communicate with Edmodo.
+ Defaults to 'basic, read_groups',
+ */
+-(void) setScopes:(NSArray*)scopes;
+
+/**
+ Step 2.
+ If we successfully logged in before and have not since logged out, 
+ we have stored keys in local storage: we can pull those out, 
+ configure a data store and have OMObjects ready to go without 
+ requesting more authentication.
+ 
+ Return YES if we success in restoring.
+ */
+- (BOOL) restoreLogin:(NSArray*)scopes;
+
+/**
+ Step 3.
+ If restore login fails, go ahead and let the user authenticate.
+ 
+ Get user 'key' so we can talk to datastore as some authenticated user.
+ 
+ Use key to create a data store and configure OM Objects with that
+ data store.
+ 
+ Anywhere along the way we might get cancelled or find an error.
+ 
+ It is an error to call this
+ */
+-(void) initiateLoginInParentView:(UIView*)parentView
+                     withClientID:(NSString*)clientID
+                  withRedirectURI:(NSString*)redirectURI
+                        onSuccess:(EMVoidResultBlock_t)successHandler
+                         onCancel:(EMVoidResultBlock_t)cancelHandler
+                          onError:(EMNSErrorBlock_t)errorHandler;
+
+
 /**
  Clear out currently logged in user.
  Clear OMObjects of data store and all loaded data.
@@ -31,28 +70,9 @@
  */
 -(void) logout;
 
-/**
- Offer widgets to login.
- Get user 'key' so we can talk to datastore as some authenticated user.
- Use key to create an empty data store and configure OM Objects with that
- data store.
- 
- Anywhere along the way we might get cancelled or find an error.
- */
--(void) initiateLoginInParentView:(UIView*)parentView
-                     withClientID:(NSString*)clientID
-                  withRedirectURI:(NSString*)redirectURI
-                       withScopes:(NSArray*)scopes
-                        onSuccess:(EMVoidResultBlock_t)successHandler
-                         onCancel:(EMVoidResultBlock_t)cancelHandler
-                          onError:(EMNSErrorBlock_t)errorHandler;
 
-/**
- Try to pull user 'key' out of local storage.
- If present, use key to create an empty data store and configure OM Objects with that
- data store, return YES;
- */
--(BOOL) restoreLogin;
-
+// If YES, initiateLoginInParentView will offer a choice between real and mock
+// login, and restoreLogin will restore a stored mock login.
+@property BOOL debugEnabled;
 
 @end

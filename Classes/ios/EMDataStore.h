@@ -57,6 +57,7 @@ typedef EMDictionaryResultBlock_t EMStoreDictionaryResultBlock_t;
                  onSuccess: (EMStoreArrayResultBlock_t) successHandler
                    onError:(EMNSErrorBlock_t) errorHandler;
 
+
 @end
 
 

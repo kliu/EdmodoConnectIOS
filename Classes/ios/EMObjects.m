@@ -32,6 +32,7 @@
     NSMutableDictionary* offLimitsUsersByUserID;
     
     id <EMDataStore> _dataStore;
+    NSArray* _scopes;
 }
 
 +(id)sharedInstance {
@@ -64,8 +65,11 @@
     return self;
 }
 
-- (void) setDataStore:(id<EMDataStore>)dataStore {
+- (void) setDataStore:(id<EMDataStore>)dataStore
+           withScopes:(NSArray*)scopes
+{
     _dataStore = dataStore;
+    _scopes = scopes;
 }
 
 
@@ -83,6 +87,7 @@
 -(void) clear
 {
     _dataStore = nil;
+    _scopes = nil;
     
     currentUser = nil;
     
@@ -141,10 +146,17 @@
     
     __typeof(self) __block blockSelf = self;
     [self __getCurrentUser: ^() {
-        [blockSelf __getGroups: ^() {
-            [blockSelf __getAllGroupMembers:successHandler
-                                    onError:errorHandler];
-        }  onError: errorHandler];
+        // Iff we can read groups, try to get that information too.
+        for (NSString* scope in _scopes) {
+            if ([scope isEqualToString:@"read_groups"]) {
+                [blockSelf __getGroups: ^() {
+                    [blockSelf __getAllGroupMembers:successHandler
+                                            onError:errorHandler];
+                }  onError: errorHandler];
+            } else {
+                successHandler();
+            }
+        }
     }  onError:errorHandler];
 }
 
