@@ -147,15 +147,20 @@
     __typeof(self) __block blockSelf = self;
     [self __getCurrentUser: ^() {
         // Iff we can read groups, try to get that information too.
+        BOOL readGroups = NO;
         for (NSString* scope in _scopes) {
             if ([scope isEqualToString:@"read_groups"]) {
-                [blockSelf __getGroups: ^() {
-                    [blockSelf __getAllGroupMembers:successHandler
-                                            onError:errorHandler];
-                }  onError: errorHandler];
-            } else {
-                successHandler();
+                readGroups = YES;
+                break;
             }
+        }
+        if (readGroups) {
+            [blockSelf __getGroups: ^() {
+                [blockSelf __getAllGroupMembers:successHandler
+                                        onError:errorHandler];
+            }  onError: errorHandler];
+        } else {
+            successHandler();
         }
     }  onError:errorHandler];
 }
@@ -252,39 +257,39 @@
     // Get members of all owned groups.
     for (EMGroup* group in ownedGroups) {
         [_dataStore getGroupMemberships:[group.groupID integerValue]
-                             onSuccess:^(NSArray *memberships) {
-                                 // These are members of groups I own.
-                                 totalCount -= 1;
-                                 for (NSDictionary* membership in memberships) {
-                                     NSDictionary* user = [membership objectForKey: ONE_API_MEMBERSHIP_USER];
-                                     [blockSelf->studentUserIDs addObject: [[user objectForKey:ONE_API_USER_ID] stringValue]];
-                                 }
-                                 maybeFinalHandler(successHandler, errorHandler);
-                             } onError:^(NSError* error) {
-                                 totalCount -=1;
-                                 errorCount += 1;
-                                 lastError = error;
-                                 maybeFinalHandler(successHandler, errorHandler);
-                             }];
+                              onSuccess:^(NSArray *memberships) {
+                                  // These are members of groups I own.
+                                  totalCount -= 1;
+                                  for (NSDictionary* membership in memberships) {
+                                      NSDictionary* user = [membership objectForKey: ONE_API_MEMBERSHIP_USER];
+                                      [blockSelf->studentUserIDs addObject: [[user objectForKey:ONE_API_USER_ID] stringValue]];
+                                  }
+                                  maybeFinalHandler(successHandler, errorHandler);
+                              } onError:^(NSError* error) {
+                                  totalCount -=1;
+                                  errorCount += 1;
+                                  lastError = error;
+                                  maybeFinalHandler(successHandler, errorHandler);
+                              }];
     }
     
     // Get members of all member groups.
     for (EMGroup* group in memberGroups) {
         [_dataStore getGroupMemberships:[group.groupID integerValue]
-                             onSuccess:^(NSArray *memberships) {
-                                 // These are members of groups I am in.
-                                 totalCount -= 1;
-                                 for (NSDictionary* membership in memberships) {
-                                     NSDictionary* user = [membership objectForKey: ONE_API_MEMBERSHIP_USER];
-                                     [blockSelf->classmateUserIDs addObject: [[user objectForKey:ONE_API_USER_ID] stringValue]];
-                                 }
-                                 maybeFinalHandler(successHandler, errorHandler);
-                             } onError:^(NSError* error) {
-                                 totalCount -=1;
-                                 errorCount += 1;
-                                 lastError = error;
-                                 maybeFinalHandler(successHandler, errorHandler);
-                             }];
+                              onSuccess:^(NSArray *memberships) {
+                                  // These are members of groups I am in.
+                                  totalCount -= 1;
+                                  for (NSDictionary* membership in memberships) {
+                                      NSDictionary* user = [membership objectForKey: ONE_API_MEMBERSHIP_USER];
+                                      [blockSelf->classmateUserIDs addObject: [[user objectForKey:ONE_API_USER_ID] stringValue]];
+                                  }
+                                  maybeFinalHandler(successHandler, errorHandler);
+                              } onError:^(NSError* error) {
+                                  totalCount -=1;
+                                  errorCount += 1;
+                                  lastError = error;
+                                  maybeFinalHandler(successHandler, errorHandler);
+                              }];
     }
 }
 
@@ -310,19 +315,19 @@
     
     __typeof(self) __block blockSelf = self;
     [_dataStore getUser:[userID integerValue]
-             onSuccess:^(NSDictionary* userDictionary) {
-                 EMUser* user = [[EMUser alloc] initFromOneAPIJson:userDictionary];
-                 [blockSelf->usersByUserID setObject:user
-                                              forKey:userID];
-                 successHandler(user);
-             } onError: ^(NSError *error) {
-                 // FIXME(dbanks)
-                 // Depending on the error, we may never be able to get this user b/c we're not allowed
-                 // to see him (he's in a different class).
-                 // Remember that fact.
-                 [blockSelf->offLimitsUsersByUserID setObject:@(1) forKey:userID];
-                 errorHandler(error);
-             }];
+              onSuccess:^(NSDictionary* userDictionary) {
+                  EMUser* user = [[EMUser alloc] initFromOneAPIJson:userDictionary];
+                  [blockSelf->usersByUserID setObject:user
+                                               forKey:userID];
+                  successHandler(user);
+              } onError: ^(NSError *error) {
+                  // FIXME(dbanks)
+                  // Depending on the error, we may never be able to get this user b/c we're not allowed
+                  // to see him (he's in a different class).
+                  // Remember that fact.
+                  [blockSelf->offLimitsUsersByUserID setObject:@(1) forKey:userID];
+                  errorHandler(error);
+              }];
     
 }
 

@@ -27,10 +27,7 @@
     EMNSErrorBlock_t _errorHandler;
 }
 
-static CGFloat const EC_WebViewHeight = 420;
-static CGFloat const EC_WebViewWidth = 370;
-
-static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING = @"https://api.edmodo.com/oauth/authorize?";
+static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING = @"https://api.edmodo.com/oauth/authorize?nr=1";
 
 
 - (id)initWithFrame:(CGRect)rect
@@ -54,11 +51,6 @@ static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING = @"https://api.edmodo.com
     return self;
 }
 
-- (void) setWebViewFrame:(CGRect)rect
-{
-    _webView.frame = rect;
-}
-
 - (NSString *) __urlEscapeString:(NSString*)string
 {
     return (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
@@ -68,7 +60,6 @@ static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING = @"https://api.edmodo.com
                                                                                  CFSTR("!*'();:@&=+$,/?%#[]\" "),
                                                                                  kCFStringEncodingUTF8));
 }
-
 
 - (NSString*) __createUrlParamsString:(NSDictionary*)params
 {
@@ -91,18 +82,37 @@ static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING = @"https://api.edmodo.com
 
 - (void) __createWidgets
 {
-    self.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.7];
-    
+    self.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.3];
+
     // create UIWebview at some nice size, centered.
     // Caller can overload if they want.
-    CGFloat x = (self.frame.size.width - EC_WebViewWidth)/2;
+    CGFloat x = (self.frame.size.width - EM_WebViewWidth)/2;
     // Scoot it up above center to make room for keyboard
-    CGFloat y = (self.frame.size.height - EC_WebViewHeight)/5;
-    CGRect wvFrame = CGRectMake(x, y, EC_WebViewWidth, EC_WebViewHeight);
+    CGFloat y = (self.frame.size.height - EM_WebViewHeight)/5;
+
+    CGRect wvFrame = CGRectMake(x, y, EM_WebViewWidth, EM_WebViewHeight);
     
     _webView = [[UIWebView alloc]initWithFrame:wvFrame];
     _webView.delegate = self;
-    _webView.scalesPageToFit = YES;
+    _webView.scrollView.bounces = NO;
+    _webView.suppressesIncrementalRendering = YES;
+    
+    
+    _webView.layer.borderColor = [UIColor blackColor].CGColor;
+    _webView.layer.borderWidth = EM_WebViewBorderWidth;
+    _webView.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.7];
+    
+    
+    // add webview to view stack
+    [self addSubview:_webView];
+    
+	UITapGestureRecognizer *tapRecognizer =
+    [[UITapGestureRecognizer alloc] initWithTarget:self
+                                            action:@selector(quitLogin:)];
+	[tapRecognizer setNumberOfTapsRequired:1];
+	[tapRecognizer setDelegate:self];
+	[self addGestureRecognizer:tapRecognizer];
+
     
     NSString* scopesString = [_scopes componentsJoinedByString:@" "];
     
@@ -118,25 +128,16 @@ static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING = @"https://api.edmodo.com
                                                                     @"scope",
                                                                     @"redirect_uri",
                                                                     ]];
-
     
-    NSString* fullURL = [EDMODO_CONNECT_LOGIN_BEGINNING stringByAppendingString:[self __createUrlParamsString:params]];
+    NSString* fullURL =
+    [EDMODO_CONNECT_LOGIN_BEGINNING stringByAppendingString:[self __createUrlParamsString:params]];
+        
     NSURL *url = [NSURL URLWithString:fullURL];
     NSURLRequest *requestURL = [NSURLRequest requestWithURL:url];
     
     // load webview
     [_webView loadRequest:requestURL];
-    
-    // add webview to view stack
-    [self addSubview:_webView];
-    
-	UITapGestureRecognizer *tapRecognizer =
-    [[UITapGestureRecognizer alloc] initWithTarget:self
-                                            action:@selector(quitLogin:)];
-	[tapRecognizer setNumberOfTapsRequired:1];
-	[tapRecognizer setDelegate:self];
-	[self addGestureRecognizer:tapRecognizer];
-    
+
 }
 
 -(void) quitLogin:(id)sender

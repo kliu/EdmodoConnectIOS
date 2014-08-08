@@ -60,6 +60,7 @@
     [self __addVerifiedMockUser:EDMODO_USER_TYPE_TEACHER:@"Bob":@"VonTeacher":21001];
     [self __addVerifiedMockUser:EDMODO_USER_TYPE_TEACHER:@"Jane":@"O'Teacher":21002];
     [self __addMockUser:EDMODO_USER_TYPE_TEACHER:@"Sneaky":@"Teacherson":21003:NO];
+    [self __addVerifiedMockUser:EDMODO_USER_TYPE_TEACHER:@"Polly":@"Teachnothing":21004];
     
     [self __addVerifiedMockUser:EDMODO_USER_TYPE_STUDENT:@"Scott":@"Prudent":33000];
     [self __addVerifiedMockUser:EDMODO_USER_TYPE_STUDENT:@"Chuck":@"Mild":33001];
@@ -69,8 +70,10 @@
     [self __addVerifiedMockUser:EDMODO_USER_TYPE_STUDENT:@"Cindy":@"Scarf":33004];
     [self __addVerifiedMockUser:EDMODO_USER_TYPE_STUDENT:@"Doug":@"Blog":33005];
     [self __addVerifiedMockUser:EDMODO_USER_TYPE_STUDENT:@"Larry":@"Lion":33006];
-
+    
     [self __addVerifiedMockUser:EDMODO_USER_TYPE_STUDENT:@"Evil":@"DiNasty":33007];
+    
+    [self __addVerifiedMockUser:EDMODO_USER_TYPE_STUDENT:@"Jim":@"NoClass":33008];
 
     // Note: for this to work, you must create all mock users before creating groups.
     
