@@ -11,6 +11,7 @@
 
 #import "EMBlockTypes.h"
 #import "EMConnectDataStore.h"
+#import "EMConnectPosts.h"
 #import "EMConnectLoginView.h"
 #import "EMDataStore.h"
 #import "EMErrorHelper.h"

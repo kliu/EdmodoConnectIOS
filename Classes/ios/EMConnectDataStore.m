@@ -19,18 +19,7 @@ static NSString* const EDMODO_CONNECT_CURRENT_USER_MEMBERSHIPS = @"https://api.e
 
 @implementation EMConnectDataStore
 {
-    NSString* accessToken;
-    // FIXME(dbanks)
-    // The access token fixes the notion of the current user.
-    // In principle that's all this object should need, the access token.
-    // In reality, we have to do some post-processing of API calls that may required the
-    // current user id.
-    // So when we change accessToken we clear this out and when we fetch access token
-    // we fill it in.
-    // If some other call requires this and we don't have it set, throw an error.
-    // Pretty safe bet that the first thing you do on getting your access token is fetch info
-    // on current user so it should not be a problem.
-    NSString* currentUserId;
+    NSString* _accessToken;
 }
 
 
@@ -50,8 +39,7 @@ static NSString* const EDMODO_CONNECT_CURRENT_USER_MEMBERSHIPS = @"https://api.e
 - (id)init {
     self =[super init];
     if (self) {
-        accessToken = nil;
-        currentUserId = nil;
+        _accessToken = nil;
     }
     return self;
 }
@@ -59,8 +47,7 @@ static NSString* const EDMODO_CONNECT_CURRENT_USER_MEMBERSHIPS = @"https://api.e
 
 -(void) setAccessToken: (NSString*)at
 {
-    accessToken = at;
-    currentUserId = nil;
+    _accessToken = at;
     
     // if accessToken is nil, we're logged out.
     // Somehow EC still thinks we are logged in, we need to explicitly tell them we're not.
@@ -80,13 +67,13 @@ static NSString* const EDMODO_CONNECT_CURRENT_USER_MEMBERSHIPS = @"https://api.e
               onError:(EMNSErrorBlock_t) errorHandler
 {
     // No access token, error.
-    if (accessToken == nil) {
+    if (_accessToken == nil) {
         [EMErrorHelper callErrorHandler:errorHandler
                             withMessage:@"No access token"];
         return;
     }
     
-    NSString *urlAsString = [NSString stringWithFormat:EDMODO_CONNECT_CURRENT_USER, accessToken];
+    NSString *urlAsString = [NSString stringWithFormat:EDMODO_CONNECT_CURRENT_USER, _accessToken];
     NSURL *url = [NSURL URLWithString:[urlAsString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
@@ -109,13 +96,13 @@ static NSString* const EDMODO_CONNECT_CURRENT_USER_MEMBERSHIPS = @"https://api.e
      onSuccess:(EMStoreDictionaryResultBlock_t) successHandler
        onError:(EMNSErrorBlock_t) errorHandler {
     // No access token, error.
-    if (accessToken == nil) {
+    if (_accessToken == nil) {
         [EMErrorHelper callErrorHandler:errorHandler
                             withMessage:@"No access token"];
         return;
     }
     
-    NSString *urlAsString = [NSString stringWithFormat:EDMODO_CONNECT_USER, (long)edmodoID, accessToken];
+    NSString *urlAsString = [NSString stringWithFormat:EDMODO_CONNECT_USER, (long)edmodoID, _accessToken];
     NSURL *url = [NSURL URLWithString:[urlAsString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
@@ -140,14 +127,14 @@ static NSString* const EDMODO_CONNECT_CURRENT_USER_MEMBERSHIPS = @"https://api.e
                        onError:(EMNSErrorBlock_t)errorHandler
 {
     // No access token, error.
-    if (accessToken == nil) {
+    if (_accessToken == nil) {
         [EMErrorHelper callErrorHandler:errorHandler
                             withMessage:@"No access token"];
         return;
     }
     
     // Get all groups this user can see.
-    NSString *urlAsString = [NSString stringWithFormat:EDMODO_CONNECT_CURRENT_USER_GROUPS, accessToken];
+    NSString *urlAsString = [NSString stringWithFormat:EDMODO_CONNECT_CURRENT_USER_GROUPS, _accessToken];
     NSURL *url = [NSURL URLWithString:[urlAsString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
@@ -171,7 +158,7 @@ static NSString* const EDMODO_CONNECT_CURRENT_USER_MEMBERSHIPS = @"https://api.e
                    onError:(EMNSErrorBlock_t) errorHandler
 {
     // No access token, error.
-    if (accessToken == nil) {
+    if (_accessToken == nil) {
         [EMErrorHelper callErrorHandler:errorHandler
                             withMessage:@"No access token"];
         return;
@@ -179,7 +166,7 @@ static NSString* const EDMODO_CONNECT_CURRENT_USER_MEMBERSHIPS = @"https://api.e
     
     // Get all group memberships for the groups.
     NSString *urlAsString = [NSString stringWithFormat:EDMODO_CONNECT_CURRENT_USER_MEMBERSHIPS,
-                             accessToken,
+                             _accessToken,
                              (long)groupID];
     NSURL *url = [NSURL URLWithString:[urlAsString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     
@@ -221,8 +208,10 @@ static NSString* const EDMODO_CONNECT_CURRENT_USER_MEMBERSHIPS = @"https://api.e
             
             if (jsonError != nil) {
                 NSLog(@"Error: %@", jsonError);
+                errorHandler(jsonError);
+            } else {
+                successHandler(jsonDict);
             }
-            successHandler(jsonDict);
         } else {
             NSLog(@"FAILED");
             [EMErrorHelper callErrorHandler:errorHandler
@@ -254,8 +243,10 @@ static NSString* const EDMODO_CONNECT_CURRENT_USER_MEMBERSHIPS = @"https://api.e
             
             if (jsonError != nil) {
                 NSLog(@"Error: %@", jsonError);
+                errorHandler(jsonError);
+            } else {
+                successHandler(jsonDict);
             }
-            successHandler(jsonDict);
         } else {
             NSLog(@"FAILED");
             [EMErrorHelper callErrorHandler:errorHandler
@@ -288,8 +279,10 @@ static NSString* const EDMODO_CONNECT_CURRENT_USER_MEMBERSHIPS = @"https://api.e
             
             if (jsonError != nil) {
                 NSLog(@"Error: %@", jsonError);
+                errorHandler(jsonError);
+            } else {
+                successHandler(jsonArray);
             }
-            successHandler(jsonArray);
         } else {
             NSLog(@"FAILED");
             [EMErrorHelper callErrorHandler:errorHandler
@@ -323,9 +316,10 @@ static NSString* const EDMODO_CONNECT_CURRENT_USER_MEMBERSHIPS = @"https://api.e
             
             if (jsonError != nil) {
                 NSLog(@"Error: %@", jsonError);
+                errorHandler(jsonError);
+            } else {
+                successHandler(jsonArray);
             }
-            // We have an array of group memberships responses.
-            successHandler(jsonArray);
             
         } else {
             NSLog(@"FAILED");

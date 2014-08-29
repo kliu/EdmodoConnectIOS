@@ -27,8 +27,8 @@
     EMNSErrorBlock_t _errorHandler;
 }
 
-static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING = @"https://api.edmodo.com/oauth/authorize?nr=1";
 
+static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING = @"https://api.edmodo.com/oauth/authorize?nr=1&";
 
 - (id)initWithFrame:(CGRect)rect
        withClientID:(NSString*)clientID
@@ -82,7 +82,7 @@ static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING = @"https://api.edmodo.com
 
 - (void) __createWidgets
 {
-    self.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.3];
+    self.backgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue: 1.0 alpha: 0.8];
 
     // create UIWebview at some nice size, centered.
     // Caller can overload if they want.
@@ -131,13 +131,13 @@ static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING = @"https://api.edmodo.com
     
     NSString* fullURL =
     [EDMODO_CONNECT_LOGIN_BEGINNING stringByAppendingString:[self __createUrlParamsString:params]];
-        
+    
     NSURL *url = [NSURL URLWithString:fullURL];
+    
     NSURLRequest *requestURL = [NSURLRequest requestWithURL:url];
     
     // load webview
     [_webView loadRequest:requestURL];
-
 }
 
 -(void) quitLogin:(id)sender
@@ -181,9 +181,7 @@ static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING = @"https://api.edmodo.com
         
         // find access token component
         for (int i = 0; i < [fragmentComponents count]; i++) {
-            
-            NSString *component = [fragmentComponents objectAtIndex:i];
-            
+            NSString *component = [fragmentComponents objectAtIndex:i];            
             if ([component rangeOfString:@"access_token="].location != NSNotFound) {
                 NSString *accessToken = [component stringByReplacingOccurrencesOfString:@"access_token=" withString:@""];
                 if (!accessToken) {

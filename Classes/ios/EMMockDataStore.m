@@ -56,8 +56,8 @@
     [mockGroupMembershipsByGroupID removeAllObjects];
     [mockGroupsOwnedByOwnerID removeAllObjects];
     
-    [self __addVerifiedMockUser:EDMODO_USER_TYPE_TEACHER:@"Tom":@"McTeacher":21000];
-    [self __addVerifiedMockUser:EDMODO_USER_TYPE_TEACHER:@"Bob":@"VonTeacher":21001];
+    [self __addVerifiedMockUser:EDMODO_USER_TYPE_TEACHER:@"Tom":@"Williams":21000];
+    [self __addVerifiedMockUser:EDMODO_USER_TYPE_TEACHER:@"Bob":@"Matthews":21001];
     [self __addVerifiedMockUser:EDMODO_USER_TYPE_TEACHER:@"Jane":@"O'Teacher":21002];
     [self __addMockUser:EDMODO_USER_TYPE_TEACHER:@"Sneaky":@"Teacherson":21003:NO];
     [self __addVerifiedMockUser:EDMODO_USER_TYPE_TEACHER:@"Polly":@"Teachnothing":21004];
@@ -65,7 +65,7 @@
     [self __addVerifiedMockUser:EDMODO_USER_TYPE_STUDENT:@"Scott":@"Prudent":33000];
     [self __addVerifiedMockUser:EDMODO_USER_TYPE_STUDENT:@"Chuck":@"Mild":33001];
     [self __addVerifiedMockUser:EDMODO_USER_TYPE_STUDENT:@"Brad":@"Joy":33002];
-    [self __addVerifiedMockUser:EDMODO_USER_TYPE_STUDENT:@"Gabby":@"Whirl":33003];
+    [self __addVerifiedMockUser:EDMODO_USER_TYPE_STUDENT:@"Gabby":@"Hayes":33003];
     
     [self __addVerifiedMockUser:EDMODO_USER_TYPE_STUDENT:@"Cindy":@"Scarf":33004];
     [self __addVerifiedMockUser:EDMODO_USER_TYPE_STUDENT:@"Doug":@"Blog":33005];
@@ -100,7 +100,7 @@
     //   Brad
     //   Gabby
     [self __addMockGroup:10003
-                        :@"Bob Class"
+                        :@"Mr Matthews 2014"
                         :@"Math"
                         :21001
                         :@[@33001, @33002, @33003]];
@@ -180,9 +180,7 @@
             [returnValue addObject:user];
         }
     }
-    // FIXME(dbanks)
-    // return [returnValue copy];
-    // Do this all over the place.
+
     return returnValue;
 }
 

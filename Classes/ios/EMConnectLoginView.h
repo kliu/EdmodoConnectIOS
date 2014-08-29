@@ -17,7 +17,7 @@
 
 
 #define EM_WebViewContentWidth      450
-#define EM_WebViewContentHeight     410
+#define EM_WebViewContentHeight     440
 #define EM_WebViewBorderWidth       5
 
 #define EM_WebViewWidth     (EM_WebViewContentWidth + 2 * EM_WebViewBorderWidth)

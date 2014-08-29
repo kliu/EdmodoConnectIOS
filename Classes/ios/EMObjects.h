@@ -12,10 +12,6 @@
 #import "EMGroup.h"
 #import "EMDataStore.h"
 
-/**
- FIXME(dbanks)
- We should be more thoughtful & thorough with success/error handling.
- */
 typedef void (^EMObjectsConfiguredBlock_t)();
 
 

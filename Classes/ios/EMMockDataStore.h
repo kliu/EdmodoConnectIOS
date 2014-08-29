@@ -16,8 +16,6 @@
 - (id)init;
 
 // setup the mock entities and relationships.
-// FIXME(dbanks)
-// For now they are hard-coded.  Later could be data-driven.
 -(void) populate;
 
 // Manually set who the current user is.

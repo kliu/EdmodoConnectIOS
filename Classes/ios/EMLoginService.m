@@ -12,6 +12,7 @@
 #import "EMConnectDataStore.h"
 #import "EMMockLoginView.h"
 #import "EMConnectLoginView.h"
+#import "EMConnectPosts.h"
 
 #define LOGIN_TYPE_KEY    @"em__loginType"
 #define EDMODO_TOKEN_KEY  @"em__edmodoToken"
@@ -66,7 +67,10 @@
     [[EMObjects sharedInstance] clear];
     // Clear out any/all data stores.
     [[EMMockDataStore sharedInstance] setCurrentUser: 0];
+    
     [[EMConnectDataStore sharedInstance] setAccessToken: nil];
+    [[EMConnectPosts sharedInstance] setAccessToken: nil];
+    
     // Clear out cached login info.
     NSUserDefaults *defaults =[NSUserDefaults standardUserDefaults];
     [defaults removeObjectForKey:LOGIN_TYPE_KEY];
@@ -160,14 +164,7 @@
                                            withRedirectURI:_redirectURI
                                                 withScopes:_scopes
                                                  onSuccess:^(NSString* accessToken) {
-                                                     // Store this key.
-                                                     [blockSelf __storeLoginData:accessToken
-                                                                          ofType:LOGIN_TYPE_EDMODO];
-                                                     // Configure the data store with this information.
-                                                     EMConnectDataStore* dataStore = [EMConnectDataStore sharedInstance];
-                                                     [dataStore setAccessToken:accessToken];
-                                                     
-                                                     [blockSelf __onDataStoreConfigSuccess: dataStore];
+                                                     [blockSelf __onAccessTokenSuccess:accessToken];
                                                  }
                                                   onCancel:^() {
                                                       [blockSelf __onDataStoreConfigCancel];
@@ -177,6 +174,19 @@
                                                    }];
     
     [_parentView addSubview: _loginView];
+}
+
+- (void) __onAccessTokenSuccess:(NSString*)accessToken
+{
+    // Store this key.
+    [self __storeLoginData:accessToken ofType:LOGIN_TYPE_EDMODO];
+    
+    // Configure the everyone who cares with the new access token.
+    EMConnectDataStore* dataStore = [EMConnectDataStore sharedInstance];
+    [dataStore setAccessToken:accessToken];
+    [[EMConnectPosts sharedInstance] setAccessToken: accessToken];
+    
+    [self __onDataStoreConfigSuccess: dataStore];    
 }
 
 /**
@@ -246,6 +256,7 @@
         if (accessToken == nil) {
             return nil;
         }
+        
         // FIXME(dbanks)
         // Is the access token still valid?
         // We may reject it b/c we know it's too old, or we try it and it times out.
