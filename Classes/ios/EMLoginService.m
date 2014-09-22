@@ -261,6 +261,7 @@
         // Is the access token still valid?
         // We may reject it b/c we know it's too old, or we try it and it times out.
         [[EMConnectDataStore sharedInstance] setAccessToken:accessToken];
+        [[EMConnectPosts sharedInstance] setAccessToken:accessToken];
         return [EMConnectDataStore sharedInstance];
     }
 }

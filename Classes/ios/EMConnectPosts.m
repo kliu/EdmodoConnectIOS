@@ -10,7 +10,7 @@
 #import "EMBlockTypes.h"
 #import "EMErrorHelper.h"
 
-static NSString* const EDMODO_CONNECT_MESSAGES = @"https://api.edmodo.com/write_messages?access_token=%@";
+static NSString* const EDMODO_CONNECT_MESSAGES = @"https://api.edmodo.com/messages?access_token=%@";
 
 
 @implementation EMConnectPosts
@@ -68,7 +68,9 @@ static NSString* const EDMODO_CONNECT_MESSAGES = @"https://api.edmodo.com/write_
     //convert object to data
     NSError* jsonSerlializeError;
     NSData* jsonData = [NSJSONSerialization dataWithJSONObject:mainDictionary
-                                                       options:NSJSONWritingPrettyPrinted error:&jsonSerlializeError];
+                                                       options:NSJSONWritingPrettyPrinted
+                                                         error:&jsonSerlializeError];
+    
     if (!jsonData) {
         errorHandler(jsonSerlializeError);
         return;
@@ -82,6 +84,7 @@ static NSString* const EDMODO_CONNECT_MESSAGES = @"https://api.edmodo.com/write_
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod: @"POST"];
     [request setHTTPBody:jsonData];
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[[NSOperationQueue alloc] init]
@@ -91,15 +94,22 @@ static NSString* const EDMODO_CONNECT_MESSAGES = @"https://api.edmodo.com/write_
                                    return;
                                } else {
                                    NSError* jsonParseError;
+                                   
                                    NSDictionary* jsonDict = [NSJSONSerialization JSONObjectWithData:data
                                                                                             options:NSJSONReadingAllowFragments
                                                                                               error:&jsonParseError];
                                    if (jsonParseError != nil) {
                                        NSLog(@"Error: %@", jsonParseError);
                                        errorHandler(jsonParseError);
-                                   } else {
-                                       successHandler(jsonDict);
+                                       return;
                                    }
+                                   
+                                   NSString* code = [jsonDict objectForKey:@"status"];
+                                   if (code && ![code isEqualToString:@"200"]) {
+                                       errorHandler([EMErrorHelper makeErrorWithMessage:[NSString stringWithFormat:@"Unexpected status code %@.", code]]);
+                                       return;
+                                   }
+                                   successHandler(jsonDict);
                                }
                            }];
     
