@@ -25,6 +25,7 @@
     EMStringResultBlock_t _successHandler;
     EMVoidResultBlock_t _cancelHandler;
     EMNSErrorBlock_t _errorHandler;
+    NSString* _stateCgiValue;
 }
 
 
@@ -37,18 +38,57 @@ static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING = @"https://api.edmodo.com
           onSuccess:(EMStringResultBlock_t)successHandler
            onCancel:(EMVoidResultBlock_t)cancelHandler
             onError:(EMNSErrorBlock_t)errorHandler {
+    return
     self = [super initWithFrame:rect];
     if (self) {
-        _clientID = clientID;
-        _redirectURI = redirectURI;
-        _scopes = scopes;
-        _successHandler = successHandler;
-        _cancelHandler = cancelHandler;
-        _errorHandler = errorHandler;
-        
-        [self __createWidgets];
+        [self __internalInitWithClientID:clientID
+                         withRedirectURI:redirectURI
+                              withScopes:scopes
+                       withStateCgiValue:nil
+                               onSuccess:successHandler
+                                onCancel:cancelHandler
+                                 onError:errorHandler];
     }
     return self;
+}
+
+- (id)initWithFrame:(CGRect)rect
+       withClientID:(NSString*)clientID
+    withRedirectURI:(NSString*)redirectURI
+         withScopes:(NSArray*)scopes
+  withStateCgiValue:(NSString*)stateCgiValue
+          onSuccess:(EMStringResultBlock_t)successHandler
+           onCancel:(EMVoidResultBlock_t)cancelHandler
+            onError:(EMNSErrorBlock_t)errorHandler {
+    self = [super initWithFrame:rect];
+    if (self) {
+        [self __internalInitWithClientID:clientID
+                         withRedirectURI:redirectURI
+                              withScopes:scopes
+                       withStateCgiValue:stateCgiValue
+                               onSuccess:successHandler
+                                onCancel:cancelHandler
+                                 onError:errorHandler];
+    }
+    return self;
+}
+
+- (void) __internalInitWithClientID:(NSString*)clientID
+                    withRedirectURI:(NSString*)redirectURI
+                         withScopes:(NSArray*)scopes
+                  withStateCgiValue:(NSString*)stateCgiValue
+                          onSuccess:(EMStringResultBlock_t)successHandler
+                           onCancel:(EMVoidResultBlock_t)cancelHandler
+                            onError:(EMNSErrorBlock_t)errorHandler {
+    _clientID = clientID;
+    _redirectURI = redirectURI;
+    _scopes = scopes;
+    _successHandler = successHandler;
+    _cancelHandler = cancelHandler;
+    _errorHandler = errorHandler;
+    _stateCgiValue = stateCgiValue;
+    
+    [self __createWidgets];
 }
 
 - (NSString *) __urlEscapeString:(NSString*)string
@@ -83,13 +123,13 @@ static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING = @"https://api.edmodo.com
 - (void) __createWidgets
 {
     self.backgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue: 1.0 alpha: 0.8];
-
+    
     // create UIWebview at some nice size, centered.
     // Caller can overload if they want.
     CGFloat x = (self.frame.size.width - EM_WebViewWidth)/2;
     // Scoot it up above center to make room for keyboard
     CGFloat y = (self.frame.size.height - EM_WebViewHeight)/5;
-
+    
     CGRect wvFrame = CGRectMake(x, y, EM_WebViewWidth, EM_WebViewHeight);
     
     _webView = [[UIWebView alloc]initWithFrame:wvFrame];
@@ -112,22 +152,24 @@ static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING = @"https://api.edmodo.com
 	[tapRecognizer setNumberOfTapsRequired:1];
 	[tapRecognizer setDelegate:self];
 	[self addGestureRecognizer:tapRecognizer];
-
+    
     
     NSString* scopesString = [_scopes componentsJoinedByString:@" "];
     
-    NSDictionary* params = [[NSDictionary alloc] initWithObjects: @[
-                                                                    _clientID,
-                                                                    @"token",
-                                                                    scopesString,
-                                                                    _redirectURI,
-                                                                    ]
-                                                         forKeys: @[
-                                                                    @"client_id",
-                                                                    @"response_type",
-                                                                    @"scope",
-                                                                    @"redirect_uri",
-                                                                    ]];
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] initWithObjects: @[
+                                                                                  _clientID,
+                                                                                  @"token",
+                                                                                  scopesString,
+                                                                                  _redirectURI,
+                                                                                  ]
+                                                                       forKeys: @[
+                                                                                  @"client_id",
+                                                                                  @"response_type",
+                                                                                  @"scope",
+                                                                                  @"redirect_uri",
+                                                                                  ]];
+    if (_stateCgiValue) {        [params setValue:_stateCgiValue forKey:@"state"];
+    }
     
     NSString* fullURL =
     [EDMODO_CONNECT_LOGIN_BEGINNING stringByAppendingString:[self __createUrlParamsString:params]];
@@ -181,7 +223,7 @@ static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING = @"https://api.edmodo.com
         
         // find access token component
         for (int i = 0; i < [fragmentComponents count]; i++) {
-            NSString *component = [fragmentComponents objectAtIndex:i];            
+            NSString *component = [fragmentComponents objectAtIndex:i];
             if ([component rangeOfString:@"access_token="].location != NSNotFound) {
                 NSString *accessToken = [component stringByReplacingOccurrencesOfString:@"access_token=" withString:@""];
                 if (!accessToken) {

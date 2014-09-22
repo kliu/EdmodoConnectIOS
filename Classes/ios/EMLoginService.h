@@ -26,10 +26,13 @@
 
 /** 
  Step 1.
+ Configuration.
  Set the scopes you will use to communicate with Edmodo.
- Defaults to 'basic, read_groups',
+ Defaults to 'basic, read_groups'.
+ Optionally also set a 'state' cgi param to be passed along to your redirect URI.
  */
--(void) setScopes:(NSArray*)scopes;
+- (void) setScopes:(NSArray*)scopes;
+- (void) setStateCgiValue:(NSString*)stateCgiValue;
 
 /**
  Step 2.

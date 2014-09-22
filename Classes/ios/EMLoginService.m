@@ -26,6 +26,7 @@
     NSString* _clientID;
     NSString* _redirectURI;
     NSArray* _scopes;
+    NSString* _stateCgiValue;
     
     EMVoidResultBlock_t _loginSuccessHandler;
     EMVoidResultBlock_t _loginCancelHandler;
@@ -52,6 +53,7 @@
     if (self) {
         _debugEnabled = NO;
         _scopes = @[@"basic", @"read_groups"];
+        _stateCgiValue = nil;
     }
     return self;
 }
@@ -59,6 +61,11 @@
 - (void) setScopes:(NSArray *)scopes
 {
     _scopes = scopes;
+}
+
+- (void) setStateCgiValue:(NSString*)stateCgiValue
+{
+    _stateCgiValue = stateCgiValue;
 }
 
 -(void) logout
@@ -107,7 +114,7 @@
     _loginErrorHandler = eHandler;
     
     [[EMMockDataStore sharedInstance] populate];
-
+    
     if (_debugEnabled) {
         UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Login"
                                                             message:@"Login with real Edmodo or mock Edmodo?"
@@ -163,6 +170,7 @@
                                               withClientID:_clientID
                                            withRedirectURI:_redirectURI
                                                 withScopes:_scopes
+                                         withStateCgiValue:_stateCgiValue
                                                  onSuccess:^(NSString* accessToken) {
                                                      [blockSelf __onAccessTokenSuccess:accessToken];
                                                  }
@@ -186,7 +194,7 @@
     [dataStore setAccessToken:accessToken];
     [[EMConnectPosts sharedInstance] setAccessToken: accessToken];
     
-    [self __onDataStoreConfigSuccess: dataStore];    
+    [self __onDataStoreConfigSuccess: dataStore];
 }
 
 /**
