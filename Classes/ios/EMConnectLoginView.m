@@ -22,6 +22,7 @@
     NSString* _clientID;
     NSString* _redirectURI;
     NSArray* _scopes;
+    BOOL _responsive;
     EMStringResultBlock_t _successHandler;
     EMVoidResultBlock_t _cancelHandler;
     EMNSErrorBlock_t _errorHandler;
@@ -29,6 +30,7 @@
 
 
 static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING = @"https://api.edmodo.com/oauth/authorize?nr=1&";
+static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING_RESPONSIVE = @"https://api.edmodo.com/oauth/authorize?";
 
 - (id)initWithFrame:(CGRect)rect
        withClientID:(NSString*)clientID
@@ -37,28 +39,47 @@ static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING = @"https://api.edmodo.com
           onSuccess:(EMStringResultBlock_t)successHandler
            onCancel:(EMVoidResultBlock_t)cancelHandler
             onError:(EMNSErrorBlock_t)errorHandler {
-    return
-    self = [super initWithFrame:rect];
-    if (self) {
-        [self __internalInitWithClientID:clientID
-                         withRedirectURI:redirectURI
-                              withScopes:scopes
-                               onSuccess:successHandler
-                                onCancel:cancelHandler
-                                 onError:errorHandler];
-    }
-    return self;
+    return [self initWithFrame:rect
+				  withClientID:clientID
+			   withRedirectURI:redirectURI
+					withScopes:scopes
+					responsive:NO
+					 onSuccess:successHandler
+					  onCancel:cancelHandler
+					   onError:errorHandler];
+}
+- (id)initWithFrame:(CGRect)rect
+	   withClientID:(NSString*)clientID
+	withRedirectURI:(NSString*)redirectURI
+		 withScopes:(NSArray*)scopes
+		 responsive:(BOOL)responsive
+		  onSuccess:(EMStringResultBlock_t)successHandler
+		   onCancel:(EMVoidResultBlock_t)cancelHandler
+			onError:(EMNSErrorBlock_t)errorHandler {
+	self = [super initWithFrame:rect];
+	if (self) {
+		[self __internalInitWithClientID:clientID
+						 withRedirectURI:redirectURI
+							  withScopes:scopes
+							  responsive: responsive
+							   onSuccess:successHandler
+								onCancel:cancelHandler
+								 onError:errorHandler];
+	}
+	return self;
 }
 
 - (void) __internalInitWithClientID:(NSString*)clientID
                     withRedirectURI:(NSString*)redirectURI
                          withScopes:(NSArray*)scopes
+						 responsive:(BOOL)responsive
                           onSuccess:(EMStringResultBlock_t)successHandler
                            onCancel:(EMVoidResultBlock_t)cancelHandler
                             onError:(EMNSErrorBlock_t)errorHandler {
     _clientID = clientID;
     _redirectURI = redirectURI;
     _scopes = scopes;
+	_responsive = responsive;
     _successHandler = successHandler;
     _cancelHandler = cancelHandler;
     _errorHandler = errorHandler;
@@ -107,19 +128,19 @@ static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING = @"https://api.edmodo.com
     
     CGRect wvFrame = CGRectMake(x, y, EM_WebViewWidth, EM_WebViewHeight);
     
-    _webView = [[UIWebView alloc]initWithFrame:wvFrame];
-    _webView.delegate = self;
-    _webView.scrollView.bounces = NO;
-    _webView.suppressesIncrementalRendering = YES;
+    self.webView = [[UIWebView alloc]initWithFrame:wvFrame];
+    self.webView.delegate = self;
+    self.webView.scrollView.bounces = NO;
+    self.webView.suppressesIncrementalRendering = YES;
     
     
-    _webView.layer.borderColor = [UIColor blackColor].CGColor;
-    _webView.layer.borderWidth = EM_WebViewBorderWidth;
-    _webView.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.7];
+    self.webView.layer.borderColor = [UIColor blackColor].CGColor;
+    self.webView.layer.borderWidth = EM_WebViewBorderWidth;
+    self.webView.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.7];
     
     
     // add webview to view stack
-    [self addSubview:_webView];
+    [self addSubview:self.webView];
     
 	UITapGestureRecognizer *tapRecognizer =
     [[UITapGestureRecognizer alloc] initWithTarget:self
@@ -143,15 +164,15 @@ static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING = @"https://api.edmodo.com
                                                                                   @"scope",
                                                                                   @"redirect_uri",
                                                                                   ]];
-    NSString* fullURL =
-    [EDMODO_CONNECT_LOGIN_BEGINNING stringByAppendingString:[self __createUrlParamsString:params]];
+	NSString* loginBeginning = _responsive ? EDMODO_CONNECT_LOGIN_BEGINNING_RESPONSIVE : EDMODO_CONNECT_LOGIN_BEGINNING;
+    NSString* fullURL = [loginBeginning stringByAppendingString:[self __createUrlParamsString:params]];
     
     NSURL *url = [NSURL URLWithString:fullURL];
     
     NSURLRequest *requestURL = [NSURLRequest requestWithURL:url];
     
     // load webview
-    [_webView loadRequest:requestURL];
+    [self.webView loadRequest:requestURL];
 }
 
 -(void) quitLogin:(id)sender

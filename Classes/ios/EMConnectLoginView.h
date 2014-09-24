@@ -27,6 +27,8 @@
 @interface EMConnectLoginView : UIView  <UIWebViewDelegate,
 UIGestureRecognizerDelegate>
 
+@property UIWebView* webView;
+
 /**
  Put up a web view for login to Edmodo.
  
@@ -57,6 +59,15 @@ UIGestureRecognizerDelegate>
  gets loaded in the webview (i.e. that doesn't redirect to something else again), 
  the actual content at <your redirct uri> is irrelevant.
  */
+
+- (id)initWithFrame:(CGRect)rect
+	   withClientID:(NSString*)clientID
+	withRedirectURI:(NSString*)redirectURI
+		 withScopes:(NSArray*)scopes
+		 responsive:(BOOL)responsive
+		  onSuccess:(EMStringResultBlock_t)successHandler
+		   onCancel:(EMVoidResultBlock_t)cancelHandler
+			onError:(EMNSErrorBlock_t)errorHandler;
 
 - (id)initWithFrame:(CGRect)rect
        withClientID:(NSString*)clientID
