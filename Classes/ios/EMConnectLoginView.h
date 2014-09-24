@@ -61,6 +61,15 @@ UIGestureRecognizerDelegate>
  */
 
 - (id)initWithFrame:(CGRect)rect
+	   withClientID:(NSString*)clientID
+	withRedirectURI:(NSString*)redirectURI
+		 withScopes:(NSArray*)scopes
+		 responsive:(BOOL)responsive
+		  onSuccess:(EMStringResultBlock_t)successHandler
+		   onCancel:(EMVoidResultBlock_t)cancelHandler
+			onError:(EMNSErrorBlock_t)errorHandler;
+
+- (id)initWithFrame:(CGRect)rect
        withClientID:(NSString*)clientID
     withRedirectURI:(NSString*)redirectURI
          withScopes:(NSArray*)scopes
