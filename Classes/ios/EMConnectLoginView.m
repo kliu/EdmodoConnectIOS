@@ -23,7 +23,6 @@
 @end
 
 @implementation EMConnectLoginView {
-    UIWebView *_webView;
     NSString* _clientID;
     NSString* _redirectURI;
     NSArray* _scopes;
@@ -137,7 +136,7 @@ static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING_RESPONSIVE = @"https://api
     self.webView.delegate = self;
     self.webView.scrollView.bounces = NO;
     self.webView.suppressesIncrementalRendering = YES;
-    _webView.scrollView.scrollEnabled = NO;
+    self.webView.scrollView.scrollEnabled = NO;
     
     self.webView.layer.borderColor = [UIColor blackColor].CGColor;
     self.webView.layer.borderWidth = EM_WebViewBorderWidth;
@@ -156,7 +155,7 @@ static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING_RESPONSIVE = @"https://api
     
     
     // load preview html while the real content is loading because it's very slow
-    [_webView loadHTMLString:@"<html><head><style>h1{text-align:center;font-family:'Helvetica Neue';font-size:40px;}.outer {display: table; position: absolute;height: 100%;width: 100%;}.middle {display: table-cell;vertical-align: middle;}.inner {margin-left: auto;margin-right: auto;width:80%;}</style><body><div class='outer'><div class='middle'><div class='inner'><h1>Loading Edmodo Login...</h1></div></div></div></body></html>" baseURL:nil];
+    [self.webView loadHTMLString:@"<html><head><style>h1{text-align:center;font-family:'Helvetica Neue';font-size:40px;}.outer {display: table; position: absolute;height: 100%;width: 100%;}.middle {display: table-cell;vertical-align: middle;}.inner {margin-left: auto;margin-right: auto;width:80%;}</style><body><div class='outer'><div class='middle'><div class='inner'><h1>Loading Edmodo Login...</h1></div></div></div></body></html>" baseURL:nil];
     [self performSelector:@selector(__loadURL:) withObject:nil afterDelay:0.2];
 }
 
@@ -165,14 +164,9 @@ static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING_RESPONSIVE = @"https://api
     _cancelHandler();
 }
 
-- (void)viewDidLoad {
-    
-    //the more the delay the errors will be less so within 0.1-0.3 would be fine
-    
-}
 
 -(void)__loadURL:(id)sender{
-    [_webView stopLoading]; //added this line to stop the previous request
+    [self.webView stopLoading]; //added this line to stop the previous request
     NSString* scopesString = [_scopes componentsJoinedByString:@" "];
     
     NSDictionary* params = [[NSDictionary alloc] initWithObjects: @[
@@ -194,7 +188,7 @@ static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING_RESPONSIVE = @"https://api
     NSURL *url = [NSURL URLWithString:fullURL];
 
     NSURLRequest *requestURL = [NSURLRequest requestWithURL:url];
-    [_webView loadRequest:requestURL];
+    [self.webView loadRequest:requestURL];
 }
 
 
