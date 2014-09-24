@@ -222,9 +222,8 @@ static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING_RESPONSIVE = @"https://api
     
     // extract data from webview URL
     NSString *fragment = [webView.request.URL fragment];
-    
     // check if fragment contains access code
-    if ([fragment rangeOfString:@"access_token="].location != NSNotFound) {
+    if ([fragment length] && [fragment rangeOfString:@"access_token="].location != NSNotFound) {
         NSArray *fragmentComponents = [fragment componentsSeparatedByString:@"&"];
         
         // find access token component
@@ -232,16 +231,20 @@ static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING_RESPONSIVE = @"https://api
             NSString *component = [fragmentComponents objectAtIndex:i];
             if ([component rangeOfString:@"access_token="].location != NSNotFound) {
                 NSString *accessToken = [component stringByReplacingOccurrencesOfString:@"access_token=" withString:@""];
-                if (!accessToken) {
-                    // FIXME(dbanks)
-                    // Is this an error or a cancel?
-                    _cancelHandler();
-                } else {
-                    _successHandler(accessToken);
-                }
+                if ([accessToken length]) {
+                    return _successHandler(accessToken);
+				}
             }
         }
-    }
+	} else if ([webView.request.URL.host isEqualToString: @"api.edmodo.com"] && [webView.request.URL.path hasPrefix: @"/oauth/authorize/"]) {
+		// alternatively, it could be an out-of-band (oob) authorization
+		NSString* accessToken = [webView.request.URL.path substringFromIndex: [@"/oauth/authorize/" length]];
+		if ([accessToken length]) {
+			return _successHandler(accessToken);
+		}
+	}
+
+	_cancelHandler();
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
