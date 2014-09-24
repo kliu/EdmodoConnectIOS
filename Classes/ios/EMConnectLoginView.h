@@ -66,29 +66,5 @@ UIGestureRecognizerDelegate>
            onCancel:(EMVoidResultBlock_t)cancelHandler
             onError:(EMNSErrorBlock_t)errorHandler;
 
-/**
- Same as above, with additional param:
- 
- stateCgiValue: if present, your redirect param will be called with an additonal 
-   cgi param, 'state=<this value>.'
- 
- This can be useful if your redirect URI needs to handle both 'code authentication 
- flows' and 'token authentication flows', as described here:
- 
- https://developers.edmodo.com/edmodo-connect/docs/
- 
- If your code-authentication-flow requires that your redirectURI itself 
- redirects to something else, you should use the 'state' param to detect a 
- token flow (e.g. 'state=token'): in that case don't redirect.
- */
-
-- (id)initWithFrame:(CGRect)rect
-       withClientID:(NSString*)clientID
-    withRedirectURI:(NSString*)redirectURI
-         withScopes:(NSArray*)scopes
-  withStateCgiValue:(NSString*)stateCgiValue
-          onSuccess:(EMStringResultBlock_t)successHandler
-           onCancel:(EMVoidResultBlock_t)cancelHandler
-            onError:(EMNSErrorBlock_t)errorHandler;
 
 @end

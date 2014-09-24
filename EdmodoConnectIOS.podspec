@@ -6,7 +6,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = "EdmodoConnectIOS"
-  s.version          = "0.1.11"
+  s.version          = "0.1.12"
   s.summary          = "EdmodoConnectIOS is an SDK."
   s.description      = <<-DESC
                        EdmodoConnectIOS is an SDK that is longer than the summary

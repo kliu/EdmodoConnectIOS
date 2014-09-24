@@ -25,7 +25,6 @@
     EMStringResultBlock_t _successHandler;
     EMVoidResultBlock_t _cancelHandler;
     EMNSErrorBlock_t _errorHandler;
-    NSString* _stateCgiValue;
 }
 
 
@@ -44,28 +43,6 @@ static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING = @"https://api.edmodo.com
         [self __internalInitWithClientID:clientID
                          withRedirectURI:redirectURI
                               withScopes:scopes
-                       withStateCgiValue:nil
-                               onSuccess:successHandler
-                                onCancel:cancelHandler
-                                 onError:errorHandler];
-    }
-    return self;
-}
-
-- (id)initWithFrame:(CGRect)rect
-       withClientID:(NSString*)clientID
-    withRedirectURI:(NSString*)redirectURI
-         withScopes:(NSArray*)scopes
-  withStateCgiValue:(NSString*)stateCgiValue
-          onSuccess:(EMStringResultBlock_t)successHandler
-           onCancel:(EMVoidResultBlock_t)cancelHandler
-            onError:(EMNSErrorBlock_t)errorHandler {
-    self = [super initWithFrame:rect];
-    if (self) {
-        [self __internalInitWithClientID:clientID
-                         withRedirectURI:redirectURI
-                              withScopes:scopes
-                       withStateCgiValue:stateCgiValue
                                onSuccess:successHandler
                                 onCancel:cancelHandler
                                  onError:errorHandler];
@@ -76,7 +53,6 @@ static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING = @"https://api.edmodo.com
 - (void) __internalInitWithClientID:(NSString*)clientID
                     withRedirectURI:(NSString*)redirectURI
                          withScopes:(NSArray*)scopes
-                  withStateCgiValue:(NSString*)stateCgiValue
                           onSuccess:(EMStringResultBlock_t)successHandler
                            onCancel:(EMVoidResultBlock_t)cancelHandler
                             onError:(EMNSErrorBlock_t)errorHandler {
@@ -86,7 +62,6 @@ static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING = @"https://api.edmodo.com
     _successHandler = successHandler;
     _cancelHandler = cancelHandler;
     _errorHandler = errorHandler;
-    _stateCgiValue = stateCgiValue;
     
     [self __createWidgets];
 }
@@ -168,9 +143,6 @@ static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING = @"https://api.edmodo.com
                                                                                   @"scope",
                                                                                   @"redirect_uri",
                                                                                   ]];
-    if (_stateCgiValue) {        [params setValue:_stateCgiValue forKey:@"state"];
-    }
-    
     NSString* fullURL =
     [EDMODO_CONNECT_LOGIN_BEGINNING stringByAppendingString:[self __createUrlParamsString:params]];
     
