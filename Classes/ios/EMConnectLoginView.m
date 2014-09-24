@@ -210,8 +210,11 @@ static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING = @"https://api.edmodo.com
 		}
 	}
 
-	_cancelHandler();
-}
+	// unless it's the first pageload, we're done
+	// TODO: use NSURLRequest to detect status, and call callback unless status is 3xx
+	if (![webView.request.URL.host isEqualToString: @"api.edmodo.com"] || ![webView.request.URL.path isEqualToString: @"/login"]) {
+		_cancelHandler();
+	}}
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
