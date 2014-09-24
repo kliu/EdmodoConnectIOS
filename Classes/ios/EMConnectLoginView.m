@@ -13,6 +13,11 @@
 
 #import "EMConnectLoginView.h"
 
+#define EDMODO_COLOR_R 0.93
+#define EDMODO_COLOR_G 0.93
+#define EDMODO_COLOR_B 0.95
+#define EDMODO_COLOR_ALPHA 0.7
+
 @interface EMConnectLoginView ()
 
 @end
@@ -118,7 +123,7 @@ static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING_RESPONSIVE = @"https://api
 
 - (void) __createWidgets
 {
-    self.backgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue: 1.0 alpha: 0.8];
+    self.backgroundColor = [UIColor colorWithRed:EDMODO_COLOR_R green:EDMODO_COLOR_G blue:EDMODO_COLOR_B alpha:EDMODO_COLOR_ALPHA];
     
     // create UIWebview at some nice size, centered.
     // Caller can overload if they want.
@@ -132,7 +137,7 @@ static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING_RESPONSIVE = @"https://api
     self.webView.delegate = self;
     self.webView.scrollView.bounces = NO;
     self.webView.suppressesIncrementalRendering = YES;
-    
+    _webView.scrollView.scrollEnabled = NO;
     
     self.webView.layer.borderColor = [UIColor blackColor].CGColor;
     self.webView.layer.borderWidth = EM_WebViewBorderWidth;
@@ -150,35 +155,49 @@ static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING_RESPONSIVE = @"https://api
 	[self addGestureRecognizer:tapRecognizer];
     
     
-    NSString* scopesString = [_scopes componentsJoinedByString:@" "];
-    
-    NSMutableDictionary* params = [[NSMutableDictionary alloc] initWithObjects: @[
-                                                                                  _clientID,
-                                                                                  @"token",
-                                                                                  scopesString,
-                                                                                  _redirectURI,
-                                                                                  ]
-                                                                       forKeys: @[
-                                                                                  @"client_id",
-                                                                                  @"response_type",
-                                                                                  @"scope",
-                                                                                  @"redirect_uri",
-                                                                                  ]];
-	NSString* loginBeginning = _responsive ? EDMODO_CONNECT_LOGIN_BEGINNING_RESPONSIVE : EDMODO_CONNECT_LOGIN_BEGINNING;
-    NSString* fullURL = [loginBeginning stringByAppendingString:[self __createUrlParamsString:params]];
-    
-    NSURL *url = [NSURL URLWithString:fullURL];
-    
-    NSURLRequest *requestURL = [NSURLRequest requestWithURL:url];
-    
-    // load webview
-    [self.webView loadRequest:requestURL];
+    // load preview html while the real content is loading because it's very slow
+    [_webView loadHTMLString:@"<html><head><style>h1{text-align:center;font-family:'Helvetica Neue';font-size:40px;}.outer {display: table; position: absolute;height: 100%;width: 100%;}.middle {display: table-cell;vertical-align: middle;}.inner {margin-left: auto;margin-right: auto;width:80%;}</style><body><div class='outer'><div class='middle'><div class='inner'><h1>Loading Edmodo Login...</h1></div></div></div></body></html>" baseURL:nil];
+    [self performSelector:@selector(__loadURL:) withObject:nil afterDelay:0.2];
 }
 
 -(void) quitLogin:(id)sender
 {
     _cancelHandler();
 }
+
+- (void)viewDidLoad {
+    
+    //the more the delay the errors will be less so within 0.1-0.3 would be fine
+    
+}
+
+-(void)__loadURL:(id)sender{
+    [_webView stopLoading]; //added this line to stop the previous request
+    NSString* scopesString = [_scopes componentsJoinedByString:@" "];
+    
+    NSDictionary* params = [[NSDictionary alloc] initWithObjects: @[
+                                                                    _clientID,
+                                                                    @"token",
+                                                                    scopesString,
+                                                                    _redirectURI,
+                                                                    ]
+                                                         forKeys: @[
+                                                                    @"client_id",
+                                                                    @"response_type",
+                                                                    @"scope",
+                                                                    @"redirect_uri",
+                                                                    ]];
+    
+    
+ 	NSString* loginBeginning = _responsive ? EDMODO_CONNECT_LOGIN_BEGINNING_RESPONSIVE : EDMODO_CONNECT_LOGIN_BEGINNING;
+    NSString* fullURL = [loginBeginning stringByAppendingString:[self __createUrlParamsString:params]];
+    NSURL *url = [NSURL URLWithString:fullURL];
+
+    NSURLRequest *requestURL = [NSURLRequest requestWithURL:url];
+    [_webView loadRequest:requestURL];
+}
+
+
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
