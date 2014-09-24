@@ -27,6 +27,8 @@
 @interface EMConnectLoginView : UIView  <UIWebViewDelegate,
 UIGestureRecognizerDelegate>
 
+@property UIWebView* webView;
+
 /**
  Put up a web view for login to Edmodo.
  

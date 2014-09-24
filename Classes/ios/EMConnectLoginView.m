@@ -28,7 +28,7 @@
 }
 
 
-static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING = @"https://api.edmodo.com/oauth/authorize?nr=1&";
+static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING = @"https://api.edmodo.com/oauth/authorize?";
 
 - (id)initWithFrame:(CGRect)rect
        withClientID:(NSString*)clientID
@@ -37,7 +37,6 @@ static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING = @"https://api.edmodo.com
           onSuccess:(EMStringResultBlock_t)successHandler
            onCancel:(EMVoidResultBlock_t)cancelHandler
             onError:(EMNSErrorBlock_t)errorHandler {
-    return
     self = [super initWithFrame:rect];
     if (self) {
         [self __internalInitWithClientID:clientID
@@ -107,19 +106,19 @@ static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING = @"https://api.edmodo.com
     
     CGRect wvFrame = CGRectMake(x, y, EM_WebViewWidth, EM_WebViewHeight);
     
-    _webView = [[UIWebView alloc]initWithFrame:wvFrame];
-    _webView.delegate = self;
-    _webView.scrollView.bounces = NO;
-    _webView.suppressesIncrementalRendering = YES;
+    self.webView = [[UIWebView alloc]initWithFrame:wvFrame];
+    self.webView.delegate = self;
+    self.webView.scrollView.bounces = NO;
+    self.webView.suppressesIncrementalRendering = YES;
     
     
-    _webView.layer.borderColor = [UIColor blackColor].CGColor;
-    _webView.layer.borderWidth = EM_WebViewBorderWidth;
-    _webView.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.7];
+    self.webView.layer.borderColor = [UIColor blackColor].CGColor;
+    self.webView.layer.borderWidth = EM_WebViewBorderWidth;
+    self.webView.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.7];
     
     
     // add webview to view stack
-    [self addSubview:_webView];
+    [self addSubview:self.webView];
     
 	UITapGestureRecognizer *tapRecognizer =
     [[UITapGestureRecognizer alloc] initWithTarget:self
@@ -151,7 +150,7 @@ static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING = @"https://api.edmodo.com
     NSURLRequest *requestURL = [NSURLRequest requestWithURL:url];
     
     // load webview
-    [_webView loadRequest:requestURL];
+    [self.webView loadRequest:requestURL];
 }
 
 -(void) quitLogin:(id)sender
