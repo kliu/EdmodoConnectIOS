@@ -11,9 +11,10 @@
 #import "EMDataStore.h"
 
 // Valid 'scope' values.
-#define EM_BASIC_SCOPE          @"basic"
-#define EM_READ_GROUPS_SCOPE    @"read_groups"
-
+#define EM_BASIC_SCOPE              @"basic"
+#define EM_READ_GROUPS_SCOPE        @"read_groups"
+#define EM_READ_USER_EMAIL_SCOPE    @"read_user_email"
+#define EM_READ_CONNECTIONS_SCOPE   @"read_connections"
 
 /**
  Handles login/logout of Edmodo User, including UI/UX componments.
