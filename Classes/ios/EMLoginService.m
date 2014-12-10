@@ -61,14 +61,14 @@
     _scopes = scopes;
 }
 
--(void) logout
+-(void) logout:(BOOL)remote
 {
     // Clear out edmodo objects.
     [[EMObjects sharedInstance] clear];
     // Clear out any/all data stores.
     [[EMMockDataStore sharedInstance] setCurrentUser: 0];
-    
-    [[EMConnectDataStore sharedInstance] setAccessToken: nil];
+
+    remote ? [[EMConnectDataStore sharedInstance] setAccessToken: nil] : [[EMConnectDataStore sharedInstance] setAccessTokenLocal: nil];
     [[EMConnectPosts sharedInstance] setAccessToken: nil];
     
     // Clear out cached login info.
@@ -77,6 +77,12 @@
     [defaults removeObjectForKey:EDMODO_TOKEN_KEY];
     [defaults removeObjectForKey:MOCK_TOKEN_KEY];
     [defaults synchronize];
+}
+
+- (void)handleCallback:(NSURL*)url {
+  if ([_loginView isKindOfClass:[EMConnectLoginView class]]) {
+    [((EMConnectLoginView*)_loginView) handleCallback:url];
+  }
 }
 
 - (BOOL) restoreLogin
@@ -226,7 +232,7 @@
 
 
 -(void) __cleanUpLogin {
-    _loginView = nil;
+    //_loginView = nil;
     _clientID = nil;
     _loginSuccessHandler = nil;
     _loginCancelHandler = nil;

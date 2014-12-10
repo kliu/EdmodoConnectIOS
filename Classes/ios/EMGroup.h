@@ -17,7 +17,7 @@
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *subject;
 @property (nonatomic, strong) NSString *url;
-@property (nonatomic) NSArray* ownerUserIDStrings;
+@property (nonatomic, strong) NSArray* ownerUserIDStrings;
 
 -(id) init;
 -(id) initFromOneAPIJson: (NSDictionary*) jsonDict;

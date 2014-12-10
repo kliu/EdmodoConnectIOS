@@ -24,6 +24,6 @@
 // Getting, remembering, revoking the access token is not handled by this
 // object.
 -(void) setAccessToken: (NSString*) accessToken;
-
+-(void) setAccessTokenLocal: (NSString*)accessToken;
 @end
 

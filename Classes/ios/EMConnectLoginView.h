@@ -18,7 +18,7 @@
 
 #define EM_WebViewContentWidth      450
 #define EM_WebViewContentHeight     440
-#define EM_WebViewBorderWidth       5
+#define EM_WebViewBorderWidth       1
 
 #define EM_WebViewWidth     (EM_WebViewContentWidth + 2 * EM_WebViewBorderWidth)
 #define EM_WebViewHeight    (EM_WebViewContentHeight + 2 * EM_WebViewBorderWidth)
@@ -27,7 +27,7 @@
 @interface EMConnectLoginView : UIView  <UIWebViewDelegate,
 UIGestureRecognizerDelegate>
 
-@property UIWebView* webView;
+@property (strong) UIWebView* webView;
 
 /**
  Put up a web view for login to Edmodo.
@@ -76,6 +76,8 @@ UIGestureRecognizerDelegate>
           onSuccess:(EMStringResultBlock_t)successHandler
            onCancel:(EMVoidResultBlock_t)cancelHandler
             onError:(EMNSErrorBlock_t)errorHandler;
+
+- (void)handleCallback:(NSURL*)url;
 
 
 @end

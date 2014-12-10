@@ -70,8 +70,9 @@
  Clear OMObjects of data store and all loaded data.
  Clear stored keys in local storage (restoreLogin won't do anything).
  */
--(void) logout;
+-(void) logout:(BOOL)remote;
 
+- (void)handleCallback:(NSURL*)url;
 
 // If YES, initiateLoginInParentView will offer a choice between real and mock
 // login, and restoreLogin will restore a stored mock login.

@@ -63,6 +63,10 @@ static NSString* const EDMODO_CONNECT_CURRENT_USER_MEMBERSHIPS = @"https://api.e
     }
 }
 
+-(void) setAccessTokenLocal: (NSString*)at {
+  _accessToken = at;
+}
+
 -(void)getCurrentUser:(EMStoreDictionaryResultBlock_t) successHandler
               onError:(EMNSErrorBlock_t) errorHandler
 {
