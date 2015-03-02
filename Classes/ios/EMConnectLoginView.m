@@ -30,6 +30,9 @@
     EMStringResultBlock_t _successHandler;
     EMVoidResultBlock_t _cancelHandler;
     EMNSErrorBlock_t _errorHandler;
+
+	// make sure that we never call more than one handler
+	BOOL _handlerCalled;
 }
 
 
@@ -87,6 +90,7 @@ static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING_RESPONSIVE = @"https://api
     _successHandler = successHandler;
     _cancelHandler = cancelHandler;
     _errorHandler = errorHandler;
+	_handlerCalled = NO;
     
     [self __createWidgets];
 }
@@ -161,7 +165,10 @@ static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING_RESPONSIVE = @"https://api
 
 -(void) quitLogin:(id)sender
 {
-    _cancelHandler();
+	if (!_handlerCalled) {
+		_handlerCalled = YES;
+		_cancelHandler();
+	}
 }
 
 
@@ -232,7 +239,10 @@ static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING_RESPONSIVE = @"https://api
             if ([component rangeOfString:@"access_token="].location != NSNotFound) {
                 NSString *accessToken = [component stringByReplacingOccurrencesOfString:@"access_token=" withString:@""];
                 if ([accessToken length]) {
-                    return _successHandler(accessToken);
+					if (!_handlerCalled) {
+						_handlerCalled = YES;
+						return _successHandler(accessToken);
+					}
 				}
             }
         }
@@ -240,7 +250,10 @@ static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING_RESPONSIVE = @"https://api
 		// alternatively, it could be an out-of-band (oob) authorization
 		NSString* accessToken = [webView.request.URL.path substringFromIndex: [@"/oauth/authorize/" length]];
 		if ([accessToken length]) {
-			return _successHandler(accessToken);
+			if (!_handlerCalled) {
+				_handlerCalled = YES;
+				return _successHandler(accessToken);
+			}
 		}
 	}
 
@@ -250,7 +263,10 @@ static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING_RESPONSIVE = @"https://api
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-	_cancelHandler();
+	if (!_handlerCalled) {
+		_handlerCalled = YES;
+		return _cancelHandler();
+	}
 }
 
 @end
