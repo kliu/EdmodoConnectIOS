@@ -244,11 +244,15 @@ static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING_RESPONSIVE = @"https://api
 		}
 	}
 
-	// unless it's the first pageload, we're done
+	// unless it's the placeholder loading screen, the first pageload or another login/auth screen, we're done
+	// since ~February 2015, Edmodo has been using paths /oauth/authorize and /sessions as alternatives to /login
 	// TODO: use NSURLRequest to detect status, and call callback unless status is 3xx
-	if (![webView.request.URL.host isEqualToString: @"api.edmodo.com"] || ![webView.request.URL.path isEqualToString: @"/login"]) {
+	BOOL isBlank = [webView.request.URL.absoluteString isEqualToString: @"about:blank"];
+	BOOL isLoginScreen = [webView.request.URL.host isEqualToString: @"api.edmodo.com"] && ([webView.request.URL.path isEqualToString: @"/login"] || [webView.request.URL.path isEqualToString: @"/oauth/authorize"] || [webView.request.URL.path isEqualToString: @"/sessions"]);
+	if (!isBlank && !isLoginScreen) {
 		_cancelHandler();
-	}}
+	}
+}
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
