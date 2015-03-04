@@ -30,6 +30,9 @@
     EMStringResultBlock_t _successHandler;
     EMVoidResultBlock_t _cancelHandler;
     EMNSErrorBlock_t _errorHandler;
+
+	// make sure that we never call more than one handler
+	BOOL _handlerCalled;
 }
 
 
@@ -87,6 +90,7 @@ static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING_RESPONSIVE = @"https://api
     _successHandler = successHandler;
     _cancelHandler = cancelHandler;
     _errorHandler = errorHandler;
+	_handlerCalled = NO;
     
     [self __createWidgets];
 }
@@ -136,7 +140,7 @@ static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING_RESPONSIVE = @"https://api
     self.webView.delegate = self;
     self.webView.scrollView.bounces = NO;
     self.webView.suppressesIncrementalRendering = YES;
-    self.webView.scrollView.scrollEnabled = NO;
+    self.webView.scrollView.scrollEnabled = _responsive;
     
     self.webView.layer.borderColor = [UIColor blackColor].CGColor;
     self.webView.layer.borderWidth = EM_WebViewBorderWidth;
@@ -161,7 +165,10 @@ static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING_RESPONSIVE = @"https://api
 
 -(void) quitLogin:(id)sender
 {
-    _cancelHandler();
+	if (!_handlerCalled) {
+		_handlerCalled = YES;
+		_cancelHandler();
+	}
 }
 
 
@@ -232,7 +239,10 @@ static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING_RESPONSIVE = @"https://api
             if ([component rangeOfString:@"access_token="].location != NSNotFound) {
                 NSString *accessToken = [component stringByReplacingOccurrencesOfString:@"access_token=" withString:@""];
                 if ([accessToken length]) {
-                    return _successHandler(accessToken);
+					if (!_handlerCalled) {
+						_handlerCalled = YES;
+						return _successHandler(accessToken);
+					}
 				}
             }
         }
@@ -240,23 +250,23 @@ static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING_RESPONSIVE = @"https://api
 		// alternatively, it could be an out-of-band (oob) authorization
 		NSString* accessToken = [webView.request.URL.path substringFromIndex: [@"/oauth/authorize/" length]];
 		if ([accessToken length]) {
-			return _successHandler(accessToken);
+			if (!_handlerCalled) {
+				_handlerCalled = YES;
+				return _successHandler(accessToken);
+			}
 		}
 	}
 
-	// unless it's the placeholder loading screen, the first pageload or another login/auth screen, we're done
-	// since ~February 2015, Edmodo has been using paths /oauth/authorize and /sessions as alternatives to /login
-	// TODO: use NSURLRequest to detect status, and call callback unless status is 3xx
-	BOOL isBlank = [webView.request.URL.absoluteString isEqualToString: @"about:blank"];
-	BOOL isLoginScreen = [webView.request.URL.host isEqualToString: @"api.edmodo.com"] && ([webView.request.URL.path isEqualToString: @"/login"] || [webView.request.URL.path isEqualToString: @"/oauth/authorize"] || [webView.request.URL.path isEqualToString: @"/sessions"]);
-	if (!isBlank && !isLoginScreen) {
-		_cancelHandler();
-	}
+	// TODO: use NSURLRequest to detect status and call appropriate callbacks
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+	if (!_handlerCalled) {
+		_handlerCalled = YES;
+		return _cancelHandler();
+	}
 }
 
 @end
