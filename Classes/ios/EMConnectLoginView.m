@@ -255,11 +255,10 @@ static NSString* const EDMODO_CONNECT_LOGIN_BEGINNING_RESPONSIVE = @"https://api
       return _successHandler(accessToken);
     }
   }
-
-  // unless it's the first pageload, we're done
-  // TODO: use NSURLRequest to detect status, and call callback unless status is 3xx
-  if (![url.host isEqualToString: @"api.edmodo.com"] || ![url.path isEqualToString: @"/login"]) {
-  		_cancelHandler();
+  BOOL isBlank = [url.host isEqualToString: @"about:blank"];
+  BOOL isLoginScreen = [url.host isEqualToString: @"api.edmodo.com"] && ([url.path isEqualToString: @"/login"] || [url.path isEqualToString: @"/oauth/authorize"] || [url.path isEqualToString: @"/sessions"]);
+  if (!isBlank && !isLoginScreen) {
+    _cancelHandler();
   }
 }
 
